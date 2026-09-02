@@ -36,10 +36,6 @@ Movie metadata is retrieved from publicly available APIs and datasets.
 
 ## Personal Data
 
-Personal information is maintained separately from the public repository.
-
-This includes:
-
 - Movies watched
 - Personal ratings
 - Viewing dates
