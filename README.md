@@ -60,8 +60,6 @@ This includes:
 
 This project is designed as a local-first system.
 
-Downloaded or generated datasets are excluded from version control where appropriate. The repository contains the code and configuration necessary to reproduce the pipeline rather than my personal data corpus.
-
 The project does not distribute copies of movies, scripts, or other copyrighted media.
 
 External APIs and datasets are used according to their respective terms of use and attribution requirements. Source-specific licensing and attribution information will be documented as additional data sources are incorporated.
