@@ -1,8 +1,8 @@
-# Movie Knowledge Engine
+# Personal Movie Vault
 
 ## Overview
 
-The Movie Knowledge Engine is a local-first knowledge retrieval system built around movies I have watched.
+The Personal Movie Vault is a local-first knowledge retrieval system built around movies I have watched.
 
 The project combines structured movie metadata with personal ratings, observations, and notes. The system uses this information to support semantic search, and question answering through RAG.
 
