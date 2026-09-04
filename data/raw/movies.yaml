@@ -1,0 +1,111 @@
+- id: your-name
+  title: Your Name.
+  year: 2016
+  director: Makoto Shinkai
+  genre: [Animation, Romance, Drama]
+  rating: 8.5
+  viewings:
+    - date_watched: August 2026
+      location: Cineplex Cinemas Langley
+      format: Regular
+      rewatch: false
+
+- id: la-la-land
+  title: La La Land
+  year: 2016
+  director: Damien Chazelle
+  genre: [Comedy, Drama, Romance]
+  rating: 9
+  viewings:
+    - date_watched: August 2026
+      location: Cineplex Cinemas Langley
+      format: Regular
+      rewatch: false
+
+- id: spiderman
+  title: Spider-Man Brand New Day
+  year: 2026
+  director: Destin Daniel Cretton
+  genre: [Science Fiction, Action, Adventure]
+  rating: 8
+  viewings:
+    - date_watched: August 2026
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: the-odyssey
+  title: The Odyssey
+  year: 2026
+  director: Christopher Nolan
+  genre: [Adventure, Action, Fantasy]
+  rating: 8.5
+  viewings:
+    - date_watched: July 2026
+      location: Cineplex Cinemas Langley
+      format: IMAX 70MM
+      rewatch: false
+
+- id: supergirl
+  title: Supergirl
+  year: 2026
+  director: Craig Gillespie
+  genre: [Action, Adventure, Science Fiction]
+  rating: 6
+  viewings:
+    - date_watched: June 2026
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: IMAX
+      rewatch: false
+
+- id: toy-story-5
+  title: Toy Story 5
+  year: 2026
+  director: Andrew Stanton
+  genre: [Animation, Family, Comedy, Adventure]
+  rating: 8
+  viewings:
+    - date_watched: June 2026
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: scary-movie
+  title: Scary Movie
+  year: 2026
+  director: Michael Tiddes
+  genre: [Comedy]
+  rating: 6.5
+  viewings:
+    - date_watched: June 2026
+      location: Cineplex Cinemas Strawberry Hill
+      format: Regular
+      rewatch: false
+
+- id: backrooms
+  title: Backrooms
+  year: 2026
+  director: Kane Parsons
+  genre: [Horror, Mystery, Science Fiction]
+  rating: 7.5
+  viewings:
+    - date_watched: May 2026
+      location: SilverCity RiverPort Cinemas
+      format: AVX DBOX
+      rewatch: false
+
+- id: obsession
+  title: Obsession
+  year: 2026
+  director: Curry Barker
+  genre: [Horror, Thriller]
+  rating: 10
+  viewings:
+    - date_watched: May 2026
+      location: Cineplex Cinemas Strawberry Hill
+      format: AVX
+      rewatch: false
+    - date_watched: July 2026
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: Regular
+      rewatch: true

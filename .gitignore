@@ -181,9 +181,6 @@ cython_debug/
 .cursorindexingignore
 
 # For this project
-data/raw/
-data/processed/
-data/personal/
 *.db
 *.sqlite
 vector_store/

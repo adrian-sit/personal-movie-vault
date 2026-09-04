@@ -2,9 +2,9 @@
 
 ## Overview
 
-The Personal Movie Vault is a local-first knowledge retrieval system built around movies I have watched.
+The Personal Movie Vault is a local-first knowledge retrieval system built around movies I have watched in movie theatres since 2025.
 
-The project combines structured movie metadata with unstructured data including personal experiences. The system uses this information to support semantic search, and question answering through RAG.
+The project combines structured movie metadata with unstructured data including personal experiences and opinions. The system uses this information to support semantic search, and question answering through RAG.
 
 The project focuses on the data and retrieval pipeline behind the system, including data ingestion, vector embeddings, and retrieval evaluation.
 
@@ -28,16 +28,21 @@ The project focuses on the data and retrieval pipeline behind the system, includ
 - [ ] Experiment with fine-tuned embedding models
 - [ ] Experiment with local LLMs
 
-## Personal Data
+## Data sources
 
+Movie metadata (including title names, director, etc.) are based on publicly available information online or in the theatre, it does not involve any APIs or copyrighted/restricted-use content.
+
+Personal Data:
 - Movies watched
 - Personal ratings
 - Viewing dates
 - Viewing location and format
 - Personal observations
 - Favorite characters
+- Favorite scenes
 - Questions
 - Likes and dislikes
+- Details most people missed
 
 
 ## Project Structure
