@@ -70,12 +70,24 @@
       format: IMAX
       rewatch: false
 
+- id: leviticus
+  title: Leviticus
+  year: 2026
+  director: Adrian Chiarella
+  genre: [Horror, Romance]
+  rating: 8.5
+  viewings:
+    - date_watched: June 2026
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: Regular
+      rewatch: false
+
 - id: scary-movie
   title: Scary Movie
   year: 2026
   director: Michael Tiddes
   genre: [Comedy]
-  rating: 6.5
+  rating: 5.5
   viewings:
     - date_watched: June 2026
       location: Cineplex Cinemas Strawberry Hill
@@ -108,4 +120,260 @@
     - date_watched: July 2026
       location: Cineplex Cinemas Coquitlam and VIP 
       format: Regular
+      rewatch: true
+
+- id: hoppers
+  title: Hoppers
+  year: 2026
+  director: Daniel Chong
+  genre: [Adventure, Animation, Comedy, Family, Science Fiction]
+  rating: 8
+  viewings:
+    - date_watched: May 2026
+      location: SilverCity RiverPort Cinemas
+      format: Regular
+      rewatch: false
+
+- id: exit-8
+  title: Exit 8
+  year: 2025
+  director: Genki Kawamura
+  genre: [Horror, Mystery, Thriller]
+  rating: 7.5
+  viewings:
+    - date_watched: April 2026
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: Regular
+      rewatch: false
+
+- id: project-hail-mary
+  title: Project Hail Mary
+  year: 2026
+  director: Christopher Miller
+  genre: [Science Fiction, Adventure]
+  rating: 7.5
+  viewings:
+    - date_watched: April 2026
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: IMAX
+      rewatch: false
+
+- id: the-shining
+  title: The Shining
+  year: 1980
+  director: Christopher Miller
+  genre: [Horror, Thriller]
+  rating: 8.5
+  viewings:
+    - date_watched: December 2025
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: fnaf2
+  title: Five Nights At Freddys 2
+  year: 2025
+  director: Emma Tammi
+  genre: [Horror, Thriller]
+  rating: 7
+  viewings:
+    - date_watched: December 2025
+      location: Scotiabank Theatre Vancouver
+      format: Regular
+      rewatch: false
+
+- id: zootopia-2
+  title: Zootopia 2
+  year: 2025
+  director: Jared Bush
+  genre: [Animation, Adventure, Comedy, Mystery, Family]
+  rating: 7.5
+  viewings:
+    - date_watched: December 2025
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: IMAX
+      rewatch: false
+
+- id: rental-faily
+  title: Rental Family
+  year: 2025
+  director: Hikari
+  genre: [Comedy, Drama]
+  rating: 8.5
+  viewings:
+    - date_watched: November 2025
+      location: Cineplex Cinemas Park Royal and VIP
+      format: VIP
+      rewatch: false
+
+- id: demon-slayer
+  title: Demon Slayer Kimetsu No Yaiba Infinity Castle
+  year: 2025
+  director: Haruo Sotozaki
+  genre: [Animation, Action, Fantasy]
+  rating: 7
+  viewings:
+    - date_watched: November 2025
+      location: Cineplex Cinemas Metropolis
+      format: Regular
+      rewatch: false
+
+- id: chainsaw-man
+  title: Chainsaw Man The Movie Reze Arc
+  year: 2025
+  director: /
+  genre: [Animation, Action & Adventure, Sci-Fi & Fantasy, Comedy]
+  rating: 8.5
+  viewings:
+    - date_watched: November 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: inception
+  title: Inception
+  year: 2010
+  director: Christopher Nolan
+  genre: [Action, Science Fiction, Adventure]
+  rating: 8
+  viewings:
+    - date_watched: November 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: back-to-the-future
+  title: Back To The Future
+  year: 1985
+  director: Robert Zemeckis
+  genre: [Adeventure, Comedy, Science Fiction]
+  rating: 8
+  viewings:
+    - date_watched: November 2025
+      location: Cineplex Cinemas Langley
+      format: IMAX
+      rewatch: false
+
+- id: final-destination
+  title: Final Destination
+  year: 2000
+  director: James Wong
+  genre: [Horror]
+  rating: 8
+  viewings:
+    - date_watched: October 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: good-fortune
+  title: Good Fortune
+  year: 2025
+  director: Aziz Ansari
+  genre: [Comedy, Fantasy]
+  rating: 8
+  viewings:
+    - date_watched: October 2025
+      location: Cineplex Cinemas Coquitlam and VIP 
+      format: VIP
+      rewatch: false
+
+- id: regretting-you
+  title: Regretting You
+  year: 2025
+  director: Josh Boone
+  genre: [Romance, Drama]
+  rating: 6
+  viewings:
+    - date_watched: October 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: tron-ares
+  title: Tron Ares
+  year: 2025
+  director: Joachim Ronning
+  genre: [Science Fiction, Adventure, Action]
+  rating: 5
+  viewings:
+    - date_watched: October 2025
+      location: Landmark Cinemas Surrey Guildford
+      format: Screen X
+      rewatch: false
+
+- id: roofman
+  title: Roofman
+  year: 2025
+  director: Derek Cianfrance
+  genre: [Crime, Comedy, Drama]
+  rating: 7
+  viewings:
+    - date_watched: October 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: one-battle-after-another
+  title: One Battle After Another
+  year: 2025
+  director: Paul Thomas Anderson
+  genre: [Thriller, Crime, Comedy]
+  rating: 9.5
+  viewings:
+    - date_watched: September 2025
+      location: The Park Theatre
+      format: 70 MM
+      rewatch: false
+
+- id: toy-story
+  title: Toy Story
+  year: 1995
+  director: John Lasseter
+  genre: [Family, Comedy, Animation, Adventure]
+  rating: 9
+  viewings:
+    - date_watched: September 2025
+      location: Landmark Cinemas New Westminster
+      format: Premiere
+      rewatch: false
+
+- id: the-long-walk
+  title: The Long Walk
+  year: 2025
+  director: Francis Lawrence
+  genre: [Science Fiction, Thriller, Horror]
+  rating: 7
+  viewings:
+    - date_watched: September 2025
+      location: Cineplex Cinemas Park Royal and VIP
+      format: Regular
+      rewatch: false
+
+- id: the-conjuring-last-rites
+  title: The Conjuring Last Rites
+  year: 2025
+  director: Michael Chaves
+  genre: [Horror]
+  rating: 6.5
+  viewings:
+    - date_watched: September 2025
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: sinners
+  title: Sinners
+  year: 2025
+  director: Curry Barker
+  genre: [Horror, Thriller]
+  rating: 10
+  viewings:
+    - date_watched: May 2025
+      location: Cineplex Cinemas Park Royal and VIP
+      format: VIP
+      rewatch: false
+    - date_watched: October 2025
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
       rewatch: true
