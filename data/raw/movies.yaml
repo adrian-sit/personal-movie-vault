@@ -362,12 +362,204 @@
       format: IMAX
       rewatch: false
 
+- id: jaws
+  title: Jaws
+  year: 2025
+  director: Michael Chaves
+  genre: [Horror]
+  rating: 7.5
+  viewings:
+    - date_watched: August 2025
+      location: Cineplex Cinemas Langley
+      format: IMAX
+      rewatch: false
+
+- id: the-roses
+  title: The Roses
+  year: 2025
+  director: Michael Chaves
+  genre: [Comedy, Drama, Romance]
+  rating: 8
+  viewings:
+    - date_watched: August 2025
+      location: Cineplex Cinemas Marine Gateway and VIP
+      format: VIP
+      rewatch: false
+
+- id: the-bad-guys-2
+  title: The Bad Guys 2
+  year: 2025
+  director: Pierre Perifel
+  genre: [Family, Comedy, Crime, Adventure, Animation, Action]
+  rating: 8
+  viewings:
+    - date_watched: August 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: Screen X
+      rewatch: false
+
+- id: ne-zha-2
+  title: Ne Zha 2
+  year: 2025
+  director: Jiao Zi
+  genre: [Animation, Action, Fantasy]
+  rating: 5
+  viewings:
+    - date_watched: August 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: relay
+  title: Relay
+  year: 2025
+  director: David Mackenzie
+  genre: [Action, Drama, Thriller]
+  rating: 9
+  viewings:
+    - date_watched: August 2025
+      location: Cineplex Cinemas Marine Gateway and VIP
+      format: VIP
+      rewatch: false
+
+- id: nobody-2
+  title: Nobody 2
+  year: 2025
+  director: Pierre Perifel
+  genre: [Action, Thriller, Crime]
+  rating: 9
+  viewings:
+    - date_watched: August 2025
+      location: Cineplex VIP Cinemas Brentwood
+      format: VIP
+      rewatch: false
+
+- id: dead-to-rights
+  title: Dead to Rights
+  year: 2025
+  director: Shen Ao
+  genre: [Drama, War, History]
+  rating: 8
+  viewings:
+    - date_watched: August 2025
+      location: SilverCity Riverport Cinemas
+      format: IMAX
+      rewatch: false
+
+- id: sketch
+  title: Sketch
+  year: 2025
+  director: Seth Worley
+  genre: [Advenutre, Fantasy, Comedy, Family]
+  rating: 6.5
+  viewings:
+    - date_watched: August 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: weapons
+  title: Weapons
+  year: 2025
+  director: Zach Creggar
+  genre: [Horry, Mystery]
+  rating: 9.5
+  viewings:
+    - date_watched: August 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: Screen X
+      rewatch: false
+
+- id: fantastic-4
+  title: The Fantastic 4 First Steps
+  year: 2025
+  director: Matt Shakman
+  genre: [Science Fiction, Adventure, Action]
+  rating: 7.5
+  viewings:
+    - date_watched: August 2025
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: sorry-baby
+  title: Sorry, Baby
+  year: 2025
+  director: Eva Victor
+  genre: [Drama, Comedy]
+  rating: 7
+  viewings:
+    - date_watched: July 2025
+      location: Cineplex Odeon International Village Cinemas
+      format: Regular
+      rewatch: false
+
+- id: superman
+  title: Superman
+  year: 2025
+  director: James Gunn
+  genre: [Science Fiction, Adventure, Action]
+  rating: 7.5
+  viewings:
+    - date_watched: July 2025
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: eddington
+  title: Eddington
+  year: 2025
+  director: Ari Aster
+  genre: [Western, Comedy, Crime]
+  rating: 7
+  viewings:
+    - date_watched: July 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: elio
+  title: Elio
+  year: 2025
+  director: Seth Worley
+  genre: [Animation, Adventure, Science Fiction, Family, Comedy]
+  rating: 7
+  viewings:
+    - date_watched: July 2025
+      location: Landmark Cinemas New Westminster
+      format: Premiere
+      rewatch: false
+
+- id: the-godfather
+  title: The Godfather
+  year: 1972
+  director: Francis Ford Coppola
+  genre: [Drama, Crime]
+  rating: 9
+  viewings:
+    - date_watched: July 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: f1-the-movie
+  title: F1 The Movie
+  year: 2025
+  director: Joseph Kosinski
+  genre: [Action, Drama]
+  rating: 8.5
+  viewings:
+    - date_watched: July 2025
+      location: Landmark Cinemas Surrey Guildford
+      format: Screen X
+      rewatch: false
+
 - id: sinners
   title: Sinners
   year: 2025
-  director: Curry Barker
-  genre: [Horror, Thriller]
-  rating: 10
+  director: Ryan Coogler
+  genre: [Horror, Action, Thriller]
+  rating: 9.5
   viewings:
     - date_watched: May 2025
       location: Cineplex Cinemas Park Royal and VIP
@@ -376,4 +568,20 @@
     - date_watched: October 2025
       location: Scotiabank Theatre Vancouver
       format: IMAX
+      rewatch: true
+
+- id: final-destination-bloodlines
+  title: Final Destinaion Bloodlines
+  year: 2025
+  director: Zach Lipovsky
+  genre: [Horror, Mystery]
+  rating: 9.5
+  viewings:
+    - date_watched: May 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: VIP
+      rewatch: false
+    - date_watched: June 2025
+      location: Cineplex VIP Cinemas Brentwood
+      format: VIP
       rewatch: true
