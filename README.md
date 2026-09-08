@@ -1,5 +1,9 @@
 # Personal Movie Vault
 
+## Content Warning
+
+Some personal movie notes may discuss sensitive topics such as violence, assault, or other difficult themes. The project does not promote, encourage, or endorse harmful behavior. Descriptions of sensitive topics will be kept limited and will avoid unnecessary graphic or explicit language wherever possible.
+
 ## Overview
 
 The Personal Movie Vault is a local-first knowledge retrieval system built around my viewing history, ratings and personal thoughts of the movies I have watched in movie theatres since 2025.
