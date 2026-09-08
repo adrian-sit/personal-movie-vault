@@ -134,6 +134,18 @@
       format: Regular
       rewatch: false
 
+- id: michael
+  title: Michael
+  year: 2025
+  director: Antoine Fuqua
+  genre: [Music, Drama]
+  rating: 8
+  viewings:
+    - date_watched: April 2026
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
 - id: exit-8
   title: Exit 8
   year: 2025
@@ -415,11 +427,23 @@
   year: 2025
   director: David Mackenzie
   genre: [Action, Drama, Thriller]
-  rating: 9
+  rating: 8.5
   viewings:
     - date_watched: August 2025
       location: Cineplex Cinemas Marine Gateway and VIP
       format: VIP
+      rewatch: false
+
+- id: the-naked-gun
+  title: The Naked Gun
+  year: 2025
+  director: Akiva Schaffer
+  genre: [Comedy, Crime, Action]
+  rating: 8.5
+  viewings:
+    - date_watched: August 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
       rewatch: false
 
 - id: nobody-2
@@ -427,7 +451,7 @@
   year: 2025
   director: Pierre Perifel
   genre: [Action, Thriller, Crime]
-  rating: 9
+  rating: 8.5
   viewings:
     - date_watched: August 2025
       location: Cineplex VIP Cinemas Brentwood
@@ -439,7 +463,7 @@
   year: 2025
   director: Shen Ao
   genre: [Drama, War, History]
-  rating: 8
+  rating: 7.5
   viewings:
     - date_watched: August 2025
       location: SilverCity Riverport Cinemas
@@ -463,7 +487,7 @@
   year: 2025
   director: Zach Creggar
   genre: [Horry, Mystery]
-  rating: 9.5
+  rating: 9
   viewings:
     - date_watched: August 2025
       location: Cineplex Cinemas Coquitlam and VIP
@@ -511,7 +535,7 @@
   year: 2025
   director: Ari Aster
   genre: [Western, Comedy, Crime]
-  rating: 7
+  rating: 6.5
   viewings:
     - date_watched: July 2025
       location: Landmark Cinemas New Westminster
@@ -554,6 +578,91 @@
       format: Screen X
       rewatch: false
 
+- id: m3gan-2
+  title: M3GAN 2.0
+  year: 2025
+  director: Gerard Johnstone
+  genre: [Action, Science Fiction, Thriller]
+  rating: 6.5
+  viewings:
+    - date_watched: June 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: Regular
+      rewatch: false
+
+- id: 28-years-later
+  title: 28 Years Later
+  year: 2025
+  director: Danny Boyle
+  genre: [Horror, Thriller, Science Fiction]
+  rating: 5.5
+  viewings:
+    - date_watched: June 2025
+      location: Cineplex VIP Cinemas Brentwood
+      format: VIP
+      rewatch: false
+
+
+- id: how-to-train-your-dragon
+  title: How To Train Your Dragon
+  year: 2025
+  director: Dean Deblois
+  genre: [Fantasy, Family, Action, Adventure]
+  rating: 8.5
+  viewings:
+    - date_watched: June 2025
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
+- id: jurassic-world-rebirth
+  title: Jurassic World Rebirth
+  year: 2025
+  director: Gareth Edwards
+  genre: [Science Fiction, Adventure, Action]
+  rating: 5.5
+  viewings:
+    - date_watched: June 2025
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
+- id: the-life-of-chuck
+  title: The Life of Chuck
+  year: 2025
+  director: Mike Flanagan
+  genre: [Fantasy, Drama]
+  rating: 8.5
+  viewings:
+    - date_watched: June 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: VIP
+      rewatch: false
+
+- id: the-phoenician-scheme
+  title: The Phoenician Scheme
+  year: 2025
+  director: Wes Anderson
+  genre: [Comedy, Adventure, Crime]
+  rating: 8
+  viewings:
+    - date_watched: June 2025
+      location: Cineplex Cinemas Park Royal and VIP
+      format: VIP
+      rewatch: false
+
+- id: mission-impossible
+  title: Mission Impossible The Final Reckoning
+  year: 2025
+  director: Christopher McQuarrie
+  genre: [Action, Thriller, Adventure]
+  rating: 6.5
+  viewings:
+    - date_watched: May 2026
+      location: Cineplex Cinemas Strawberry Hill
+      format: AVX
+      rewatch: false
+  
 - id: sinners
   title: Sinners
   year: 2025
@@ -565,7 +674,7 @@
       location: Cineplex Cinemas Park Royal and VIP
       format: VIP
       rewatch: false
-    - date_watched: October 2025
+    - date_watched: November 2025
       location: Scotiabank Theatre Vancouver
       format: IMAX
       rewatch: true
@@ -585,3 +694,39 @@
       location: Cineplex VIP Cinemas Brentwood
       format: VIP
       rewatch: true
+
+- id: thunderbolts
+  title: Thunderbolts*
+  year: 2025
+  director: Jake Schreier
+  genre: [Action, Science Fiction, Adventure]
+  rating: 7.5
+  viewings:
+    - date_watched: May 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: Screen X
+      rewatch: false
+
+- id: minions-the-rise-of-gru
+  title: Minions The rise of Gru
+  year: 2022
+  director: Kyle Balda
+  genre: [Animation, Comedy, Science Fiction, Crime, Family]
+  rating: 7.5
+  viewings:
+    - date_watched: May 2025
+      location: Cineplex Cinemas Park Royal and VIP
+      format: Regular
+      rewatch: false
+
+- id: a-minecraft-movie
+  title: A Minecraft Movie
+  year: 2025
+  director: Jared Hess
+  genre: [Family, Fantasy, Comedy, Adventure]
+  rating: 7
+  viewings:
+    - date_watched: April 2025
+      location: Cineplex Cinemas Coquitlam and VIP
+      format: VIP
+      rewatch: false
