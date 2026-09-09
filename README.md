@@ -65,7 +65,38 @@ Ratings are given on a scale of **0–10**
 
 ## Setup
 
+This project uses [Ollama](https://ollama.com/) so both the embeddings and the
+language model stay on your computer. Install Ollama, then from PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+ollama pull nomic-embed-text
+ollama pull qwen2.5:3b
+python src\yaml_to_json.py
+python src\rag.py build
+```
+
+`qwen2.5:3b` is a good small default. On a machine with more RAM, you can use
+`qwen2.5:7b` by passing `--chat-model qwen2.5:7b` when asking a question.
+
 ## Usage
+
+Add a movie's factual data to `data/raw/movies.yaml` and its reflection to a
+Markdown file in `data/raw/`. The Markdown frontmatter must include the same
+`movie_id` as the YAML entry. Run the two build commands above after changing
+either source.
+
+Ask a question with retrieval and a local answer:
+
+```powershell
+python src\rag.py ask "Which movie did I find most immersive, and why?"
+python src\rag.py ask "What did I dislike about Sinners?" --top-k 3
+```
+
+The response includes numbered citations and the matched local files. The
+derived `documents.jsonl` and vector index are intentionally ignored by Git;
+the original YAML and Markdown remain the source of truth.
 
 ## Privacy & Copyright
 

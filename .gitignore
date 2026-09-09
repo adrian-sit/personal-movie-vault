@@ -185,3 +185,5 @@ cython_debug/
 *.sqlite
 vector_store/
 models/
+data/processed/documents.jsonl
+data/processed/rag_index.json
