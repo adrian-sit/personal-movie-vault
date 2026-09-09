@@ -12,6 +12,10 @@ The project combines structured movie and viewing metadata with semi-structured 
 
 The project focuses on the data and retrieval pipeline behind the system, including data ingestion, vector embeddings, and retrieval evaluation.
 
+## Design Consideration
+
+Although this project's data content is relatively small and could potentially fit in a modern LLM's context window, using a RAG system reduces unnecessary context and improves relevancy and efficiency in generation. Plus, this project focuses on smaller local LLMs, the main goal is to balance accuracy while running on consumer hardware.
+
 ## Goals
 
 - Building an end-to-end data ingestion and transformation pipeline
