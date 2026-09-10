@@ -186,4 +186,4 @@ cython_debug/
 vector_store/
 models/
 data/processed/documents.jsonl
-data/processed/rag_index.json
+data/processed/rag_index*.json

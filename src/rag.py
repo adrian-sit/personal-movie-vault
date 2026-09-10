@@ -121,32 +121,94 @@ def cosine(left: list[float], right: list[float]) -> float:
     return sum(x * y for x, y in zip(left, right)) / denominator if denominator else 0.0
 
 
+def tokenize(text: str) -> list[str]:
+    """Keep a small, predictable tokenizer for the lexical BM25 baseline."""
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+def bm25_scores(question: str, documents: list[dict[str, Any]]) -> list[float]:
+    """Return lexical BM25 scores without adding a search-engine dependency."""
+    query_terms = tokenize(question)
+    tokenized_documents = [tokenize(document["text"]) for document in documents]
+    document_count = len(documents)
+    average_length = sum(map(len, tokenized_documents)) / document_count if document_count else 0
+    document_frequency = {
+        term: sum(term in set(tokens) for tokens in tokenized_documents)
+        for term in set(query_terms)
+    }
+    k1, b = 1.5, 0.75
+    scores: list[float] = []
+    for tokens in tokenized_documents:
+        term_frequency = {term: tokens.count(term) for term in set(query_terms)}
+        score = 0.0
+        for term in set(query_terms):
+            frequency = term_frequency[term]
+            if not frequency:
+                continue
+            inverse_frequency = math.log(1 + (document_count - document_frequency[term] + 0.5) /
+                                         (document_frequency[term] + 0.5))
+            length_factor = k1 * (1 - b + b * len(tokens) / average_length)
+            score += inverse_frequency * frequency * (k1 + 1) / (frequency + length_factor)
+        scores.append(score)
+    return scores
+
+
+def min_max_normalize(scores: list[float]) -> list[float]:
+    if not scores:
+        return []
+    low, high = min(scores), max(scores)
+    if high == low:
+        return [1.0 if score else 0.0 for score in scores]
+    return [(score - low) / (high - low) for score in scores]
+
+
+def index_path(value: str) -> Path:
+    path = Path(value)
+    return path if path.is_absolute() else ROOT / path
+
+
 def build(args: argparse.Namespace) -> None:
     documents = make_documents()
     vectors = embed([doc["text"] for doc in documents], args.embed_model)
     for document, vector in zip(documents, vectors):
         document["embedding"] = vector
-    INDEX.write_text(json.dumps({"embed_model": args.embed_model, "documents": documents}), encoding="utf-8")
+    output_index = index_path(args.index)
+    output_index.parent.mkdir(parents=True, exist_ok=True)
+    output_index.write_text(json.dumps({"embed_model": args.embed_model, "documents": documents}), encoding="utf-8")
     with DOCUMENTS.open("w", encoding="utf-8") as output:
         for document in documents:
             output.write(json.dumps({key: value for key, value in document.items() if key != "embedding"}) + "\n")
-    print(f"Indexed {len(documents)} documents in {INDEX.relative_to(ROOT)}")
+    print(f"Indexed {len(documents)} documents in {output_index.relative_to(ROOT)}")
 
 
-def search(question: str, top_k: int) -> list[dict[str, Any]]:
-    if not INDEX.exists():
+def search(question: str, top_k: int, retrieval: str, hybrid_weight: float, path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
         raise RuntimeError("Index not found. Run `python src/rag.py build` first.")
-    index = json.loads(INDEX.read_text(encoding="utf-8"))
-    query_vector = embed([question], index["embed_model"])[0]
+    index = json.loads(path.read_text(encoding="utf-8"))
+    documents = index["documents"]
+    lexical_scores = bm25_scores(question, documents)
+    semantic_scores = [0.0] * len(documents)
+    if retrieval in {"semantic", "hybrid"}:
+        query_vector = embed([question], index["embed_model"])[0]
+        semantic_scores = [cosine(query_vector, document["embedding"]) for document in documents]
+    if retrieval == "semantic":
+        scores = semantic_scores
+    elif retrieval == "bm25":
+        scores = lexical_scores
+    else:
+        dense = min_max_normalize(semantic_scores)
+        lexical = min_max_normalize(lexical_scores)
+        scores = [hybrid_weight * dense_score + (1 - hybrid_weight) * lexical_score
+                  for dense_score, lexical_score in zip(dense, lexical)]
     ranked = sorted(
-        ({**document, "score": cosine(query_vector, document["embedding"])} for document in index["documents"]),
+        ({**document, "score": score} for document, score in zip(documents, scores)),
         key=lambda item: item["score"], reverse=True,
     )
     return ranked[:top_k]
 
 
 def ask(args: argparse.Namespace) -> None:
-    results = search(args.question, args.top_k)
+    results = search(args.question, args.top_k, args.retrieval, args.hybrid_weight, index_path(args.index))
     context = "\n\n".join(
         f"[{i}] {item['title']} — {item['section']} ({item['source']})\n{item['text']}"
         for i, item in enumerate(results, 1)
@@ -159,7 +221,7 @@ def ask(args: argparse.Namespace) -> None:
     )
     answer = ollama("/api/generate", {"model": args.chat_model, "prompt": prompt, "stream": False})["response"].strip()
     print(answer)
-    print("\nSources:")
+    print(f"\nSources ({args.retrieval} retrieval):")
     for i, item in enumerate(results, 1):
         print(f"[{i}] {item['title']} — {item['section']} ({item['source']}; score {item['score']:.3f})")
 
@@ -169,11 +231,18 @@ def main() -> None:
     commands = parser.add_subparsers(dest="command", required=True)
     build_parser = commands.add_parser("build", help="Combine YAML metadata and Markdown notes and embed them")
     build_parser.add_argument("--embed-model", default="nomic-embed-text", help="Ollama embedding model")
+    build_parser.add_argument("--index", default=str(INDEX.relative_to(ROOT)), help="Output path for this embedding index")
     ask_parser = commands.add_parser("ask", help="Retrieve notes and ask the local LLM")
     ask_parser.add_argument("question")
     ask_parser.add_argument("--top-k", type=int, default=5)
     ask_parser.add_argument("--chat-model", default="qwen2.5:3b", help="Ollama chat model")
+    ask_parser.add_argument("--retrieval", choices=("semantic", "bm25", "hybrid"), default="semantic")
+    ask_parser.add_argument("--hybrid-weight", type=float, default=0.5,
+                            help="Semantic weight for hybrid retrieval, from 0 to 1")
+    ask_parser.add_argument("--index", default=str(INDEX.relative_to(ROOT)), help="Embedding index to query")
     args = parser.parse_args()
+    if args.command == "ask" and not 0 <= args.hybrid_weight <= 1:
+        parser.error("--hybrid-weight must be between 0 and 1")
     if args.command == "build":
         build(args)
     else:
