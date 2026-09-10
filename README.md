@@ -92,14 +92,31 @@ inference on the local machine.
 
 `src/yaml_to_json.py` converts `data/raw/movies.yaml` into `movies.json`.
 During `rag.py build`, each movie becomes one **metadata chunk** containing its
-title, year, director, genres, rating, and viewing history. Every non-empty
-Markdown heading (`## Notes`, `## Likes`, `## Favorite Scene`, and so on)
-becomes a separate **note chunk**. The Markdown frontmatter `movie_id` must
-match a YAML movie `id`; it is the join key between the two sources.
+title, year, director, genres, rating, and viewing history. Markdown
+frontmatter `movie_id` must match a YAML movie `id`; it is the join key between
+the two sources.
 
-Section-level chunks keep one topic together while preventing an answer about a
-dislike or favourite scene from being dominated by an entire review. The
-generated `documents.jsonl` exposes these exact chunks for inspection.
+Notes use **semantic chunking** rather than fixed paragraph chunks. The script
+preserves each Markdown heading (`## Notes`, `## Likes`, `## Favorite Scene`,
+and so on) as metadata, then splits prose into sentences and list sections into
+individual list items. It embeds those units locally and measures the semantic
+distance between each neighbouring pair. Large meaning shifts become candidate
+chunk boundaries.
+
+The chunker only accepts a semantic boundary after at least approximately 80
+words, choosing boundaries in the most dissimilar 20% of neighbouring unit
+pairs. A 280-word maximum prevents a long passage from becoming one broad
+chunk; an unusually long sentence is split by words only as a final fallback.
+This means a change from reactions about the cast to a theatre-format
+observation can form two chunks even when both occur in one paragraph, while a
+short `Likes` list remains together. Every chunk retains its movie title,
+section, source path, position, and total number of chunks in the section.
+`documents.jsonl` exposes the exact chunks used for indexing.
+
+By default, semantic boundaries use `nomic-embed-text` via `--chunk-model`.
+This is intentionally separate from `--embed-model`: keep the chunk model
+fixed when comparing document embedding models, so the evaluation measures
+retrieval rather than a changed corpus.
 
 ### Embedding index
 
@@ -121,8 +138,8 @@ movie facts.
 
 ## Retrieval Variants
 
-All variants use the same chunks and return the same number of results, making
-them suitable for a controlled retrieval evaluation.
+All variants use this same semantically chunked corpus and return the same
+number of results, making them suitable for a controlled retrieval evaluation.
 
 | Variant | Command option | Method | What it tests |
 |---|---|---|---|
@@ -163,6 +180,14 @@ Markdown file in `data/raw/`. The Markdown frontmatter must include the same
 `movie_id` as the YAML entry. Run the two build commands above after changing
 either source.
 
+When changing a source file, the semantic chunking model, or the document
+embedding model, rebuild the index before asking questions:
+
+```powershell
+python src\yaml_to_json.py
+python src\rag.py build
+```
+
 Ask a question with retrieval and a local answer:
 
 ```powershell
@@ -181,7 +206,8 @@ python src\rag.py ask "What did I dislike about Sinners?" --retrieval semantic -
 python src\rag.py ask "What did I dislike about Sinners?" --retrieval bm25 --top-k 3
 python src\rag.py ask "What did I dislike about Sinners?" --retrieval hybrid --hybrid-weight 0.5 --top-k 3
 
-# A second embedding-model index kept alongside the default baseline
+# A second document-embedding index kept alongside the default baseline.
+# Keep the default chunk model fixed so both indexes contain the same chunks.
 ollama pull mxbai-embed-large
 python src\rag.py build --embed-model mxbai-embed-large --index data\processed\rag_index_mxbai.json
 python src\rag.py ask "What did I dislike about Sinners?" --retrieval semantic --index data\processed\rag_index_mxbai.json --top-k 3

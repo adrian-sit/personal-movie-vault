@@ -26,6 +26,9 @@ MOVIES = PROCESSED / "movies.json"
 DOCUMENTS = PROCESSED / "documents.jsonl"
 INDEX = PROCESSED / "rag_index.json"
 OLLAMA_URL = "http://localhost:11434"
+SEMANTIC_CHUNK_MIN_WORDS = 80
+SEMANTIC_CHUNK_MAX_WORDS = 280
+SEMANTIC_BREAK_PERCENTILE = 0.80
 
 
 def ollama(endpoint: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -68,6 +71,64 @@ def parse_note(path: Path) -> tuple[dict[str, str], list[tuple[str, str]]]:
     return frontmatter, pairs
 
 
+def word_count(text: str) -> int:
+    return len(re.findall(r"[\w']+", text))
+
+
+def semantic_units(content: str) -> list[str]:
+    """Split prose into sentences and preserve list items as individual units."""
+    paragraphs = [paragraph.strip() for paragraph in re.split(r"\n\s*\n", content) if paragraph.strip()]
+    units: list[str] = []
+    for paragraph in paragraphs:
+        if re.search(r"(?m)^(?:[-*+] |\d+[.)] )", paragraph):
+            candidates = [line.strip() for line in paragraph.splitlines() if line.strip()]
+        else:
+            candidates = [sentence.strip() for sentence in re.split(r"(?<=[.!?])\s+", paragraph) if sentence.strip()]
+        for candidate in candidates:
+            if word_count(candidate) <= SEMANTIC_CHUNK_MAX_WORDS:
+                units.append(candidate)
+            else:
+                words = candidate.split()
+                units.extend(" ".join(words[start:start + SEMANTIC_CHUNK_MAX_WORDS])
+                             for start in range(0, len(words), SEMANTIC_CHUNK_MAX_WORDS))
+    return units
+
+
+def percentile(values: list[float], fraction: float) -> float:
+    ordered = sorted(values)
+    return ordered[max(0, math.ceil(fraction * len(ordered)) - 1)]
+
+
+def semantic_chunk_section(content: str, model: str) -> list[str]:
+    """Create chunks at large local-embedding meaning shifts between note units."""
+    units = semantic_units(content)
+    if len(units) < 2:
+        return units
+    vectors = embed(units, model)
+    distances = [1 - cosine(left, right) for left, right in zip(vectors, vectors[1:])]
+    # Avoid treating the only boundary in a short note as inherently meaningful.
+    semantic_threshold = percentile(distances, SEMANTIC_BREAK_PERCENTILE) if len(distances) >= 3 else math.inf
+    chunks: list[str] = []
+    current: list[str] = []
+    current_size = 0
+    for position, unit in enumerate(units):
+        unit_size = word_count(unit)
+        should_break_for_size = current and current_size + unit_size > SEMANTIC_CHUNK_MAX_WORDS
+        previous_distance = distances[position - 1] if position else 0.0
+        should_break_for_meaning = (
+            current_size >= SEMANTIC_CHUNK_MIN_WORDS
+            and previous_distance >= semantic_threshold
+        )
+        if should_break_for_size or should_break_for_meaning:
+            chunks.append("\n\n".join(current))
+            current, current_size = [], 0
+        current.append(unit)
+        current_size += unit_size
+    if current:
+        chunks.append("\n\n".join(current))
+    return chunks
+
+
 def movie_text(movie: dict[str, Any]) -> str:
     viewings = "; ".join(
         f"{v.get('date_watched', 'unknown date')} at {v.get('location', 'unknown location')} "
@@ -83,7 +144,7 @@ def movie_text(movie: dict[str, Any]) -> str:
     )
 
 
-def make_documents() -> list[dict[str, Any]]:
+def make_documents(chunk_model: str) -> list[dict[str, Any]]:
     if not MOVIES.exists():
         raise RuntimeError("data/processed/movies.json is missing. Run src/yaml_to_json.py first.")
     movies = json.loads(MOVIES.read_text(encoding="utf-8"))
@@ -96,6 +157,8 @@ def make_documents() -> list[dict[str, Any]]:
             "title": movie["title"],
             "section": "Metadata",
             "source": "data/raw/movies.yaml",
+            "chunk_index": 1,
+            "chunk_count": 1,
             "text": movie_text(movie),
         })
     for note_path in RAW.glob("*.md"):
@@ -105,14 +168,19 @@ def make_documents() -> list[dict[str, Any]]:
             print(f"Skipping {note_path.name}: no matching movie_id", file=sys.stderr)
             continue
         for heading, content in sections:
-            documents.append({
-                "id": f"{movie_id}:{heading.lower().replace(' ', '-')}",
-                "movie_id": movie_id,
-                "title": by_id[movie_id]["title"],
-                "section": heading,
-                "source": f"data/raw/{note_path.name}",
-                "text": f"Movie: {by_id[movie_id]['title']}\nSection: {heading}\n{content}",
-            })
+            chunks = semantic_chunk_section(content, chunk_model)
+            heading_id = re.sub(r"[^a-z0-9]+", "-", heading.lower()).strip("-")
+            for position, chunk in enumerate(chunks, start=1):
+                documents.append({
+                    "id": f"{movie_id}:{heading_id}:{position}",
+                    "movie_id": movie_id,
+                    "title": by_id[movie_id]["title"],
+                    "section": heading,
+                    "source": f"data/raw/{note_path.name}",
+                    "chunk_index": position,
+                    "chunk_count": len(chunks),
+                    "text": f"Movie: {by_id[movie_id]['title']}\nSection: {heading}\n{chunk}",
+                })
     return documents
 
 
@@ -168,7 +236,7 @@ def index_path(value: str) -> Path:
 
 
 def build(args: argparse.Namespace) -> None:
-    documents = make_documents()
+    documents = make_documents(args.chunk_model)
     vectors = embed([doc["text"] for doc in documents], args.embed_model)
     for document, vector in zip(documents, vectors):
         document["embedding"] = vector
@@ -231,6 +299,8 @@ def main() -> None:
     commands = parser.add_subparsers(dest="command", required=True)
     build_parser = commands.add_parser("build", help="Combine YAML metadata and Markdown notes and embed them")
     build_parser.add_argument("--embed-model", default="nomic-embed-text", help="Ollama embedding model")
+    build_parser.add_argument("--chunk-model", default="nomic-embed-text",
+                              help="Ollama embedding model used to find semantic chunk boundaries")
     build_parser.add_argument("--index", default=str(INDEX.relative_to(ROOT)), help="Output path for this embedding index")
     ask_parser = commands.add_parser("ask", help="Retrieve notes and ask the local LLM")
     ask_parser.add_argument("question")
