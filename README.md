@@ -37,33 +37,68 @@ Although this project's data content is relatively small and could potentially f
 - [ ] Conduct exploratory data analysis
       
 
-## Data sources
+## Raw Dataset Format
 
-- Movie Title
-- Director
-- Genre
+The hand-authored dataset is stored under `data/raw/` in two complementary
+formats. These files are the source of truth; everything in `data/processed/`
+can be regenerated from them.
 
-Personal Data:
-- Personal ratings
-- Viewing dates
-- Viewing location and format
-- Personal observations
-- Favorite characters
-- Favorite scenes
-- Questions
-- Likes and dislikes
-- Details most people missed
+### Movie metadata: `movies.yaml`
 
-## Rating Scale
+One YAML object represents one movie. It records stable, structured facts and
+viewing history:
 
-Ratings are given on a scale of **0–10**
+```yaml
+- id: the-odyssey
+  title: The Odyssey
+  year: 2026
+  director: Christopher Nolan
+  genre: [Adventure, Action, Fantasy]
+  rating: 8.5
+  viewings:
+    - date_watched: July 2026
+      location: Cineplex Cinemas Langley
+      format: IMAX 70MM
+      rewatch: false
+```
 
-- **<5** — Horribly made movie
-- **5-5.5** — Boring / made me physically cringe / feels like a waste of time and money, but not poorly made
-- **6-6.5** — Includes some elements I enjoy, but overall not very enjoyable
-- **7-7.5** — A movie I enjoyed, but not necessarily recommend 
-- **8-8.5** — Holds my attention, immersive, emotionally resonant, or provides an escape from reality
-- **9-10** — Exceptional experience; completely captivating, deeply emotional, and unforgettable
+`id` is the stable identifier used to connect this record with its personal
+note. `rating` follows the personal [rating scale](docs/rating-scale.md), which
+is kept separately because it is dataset context rather than pipeline logic.
+
+### Personal notes: `<movie-id>.md`
+
+Each movie can have a Markdown note file named after its ID. YAML frontmatter
+links it to the corresponding `movies.yaml` record, and Markdown headings keep
+free-form reflections in recognizable categories:
+
+```md
+---
+movie_id: the-odyssey
+title: The Odyssey
+---
+
+## Notes
+Free-form viewing reactions, interpretations, and observations.
+
+## Favorite Character
+Odysseus
+
+## Favorite Scene
+The bow sequence when Odysseus returned.
+
+## Likes
+- Great visuals
+
+## Dislikes
+- Any negative reactions or criticisms.
+```
+
+The note schema is intentionally flexible. Common sections include `Notes`,
+`Favorite Character`, `Favorite Scene`, `Questions`, `Likes`, `Dislikes`, and
+`Details: Facts Or Theories`; sections may be empty or omitted. During indexing,
+the frontmatter `movie_id` joins each note to its structured metadata, while
+the note text is semantically chunked for retrieval.
 
 
 ## Project Structure
