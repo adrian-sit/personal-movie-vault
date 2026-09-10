@@ -33,11 +33,8 @@ Although this project's data content is relatively small and could potentially f
 - [ ] Hybrid keyword and semantic retrieval
 - [ ] Retrieval-augmented generation (RAG)
 - [ ] Build a semi-automatic retrieval evaluation pipeline
-- [ ] Perform structured data extraction form unstructured data
 - [ ] Enhance quantitative information retrieval accuracy through data processing
 - [ ] Conduct exploratory data analysis
-- [ ] Experiment with fine-tuned embedding models
-- [ ] Experiment with multiple local LLMs
       
 
 ## Data sources
