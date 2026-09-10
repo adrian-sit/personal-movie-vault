@@ -1,5 +1,26 @@
 [
   {
+    "id": "cars",
+    "title": "Cars",
+    "year": 2006,
+    "director": "John Lasseter",
+    "genre": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family"
+    ],
+    "rating": 7,
+    "viewings": [
+      {
+        "date_watched": "September 2026",
+        "location": "Cineplex Cinemas Strawberry Hill",
+        "format": "Regular",
+        "rewatch": false
+      }
+    ]
+  },
+  {
     "id": "your-name",
     "title": "Your Name.",
     "year": 2016,
@@ -1090,7 +1111,7 @@
     "rating": 6.5,
     "viewings": [
       {
-        "date_watched": "May 2026",
+        "date_watched": "May 2025",
         "location": "Cineplex Cinemas Strawberry Hill",
         "format": "AVX",
         "rewatch": false
