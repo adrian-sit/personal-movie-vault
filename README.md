@@ -14,7 +14,7 @@ The project focuses on the data and retrieval pipeline behind the system, includ
 
 ## Design Consideration
 
-Although this project's data content is relatively small and could potentially fit in a modern LLM's context window, using a RAG system reduces unnecessary context and improves relevancy and efficiency in generation. Plus, this project focuses on smaller local LLMs, the main goal is to balance accuracy while running on consumer hardware.
+Although this project's data content is relatively small and could fit in a modern LLM's context window (including small local models), using a RAG system reduces unnecessary context and improves relevancy and efficiency in generation. Also, this avoids any long context problems, for example lost in the middle, the main goal is to balance accuracy while running on consumer hardware.
 
 ## Goals
 
