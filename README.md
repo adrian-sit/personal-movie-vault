@@ -45,7 +45,7 @@ can be regenerated from them.
 
 ### Movie metadata: `movies.yaml`
 
-One YAML object represents one movie. It records stable, structured facts and
+One YAML object represents one movie. It records structured facts and
 viewing history:
 
 ```yaml
@@ -64,7 +64,7 @@ viewing history:
 
 `id` is the stable identifier used to connect this record with its personal
 note. `rating` follows the personal [rating scale](docs/rating-scale.md), which
-is kept separately because it is dataset context rather than pipeline logic.
+is kept separately.
 
 ### Personal notes: `<movie-id>.md`
 
@@ -228,24 +228,6 @@ Ask a question with retrieval and a local answer:
 ```powershell
 python src\rag.py ask "Which movie did I find most immersive, and why?"
 python src\rag.py ask "What did I dislike about Sinners?" --top-k 3
-```
-
-### Comparing retrieval and embedding approaches
-
-Use the same question and `--top-k` value for every run, then compare the
-printed sources before judging answer quality:
-
-```powershell
-# Same embedding index, three retrieval methods
-python src\rag.py ask "What did I dislike about Sinners?" --retrieval semantic --top-k 3
-python src\rag.py ask "What did I dislike about Sinners?" --retrieval bm25 --top-k 3
-python src\rag.py ask "What did I dislike about Sinners?" --retrieval hybrid --hybrid-weight 0.5 --top-k 3
-
-# A second document-embedding index kept alongside the default baseline.
-# Keep the default chunk model fixed so both indexes contain the same chunks.
-ollama pull mxbai-embed-large
-python src\rag.py build --embed-model mxbai-embed-large --index data\processed\rag_index_mxbai.json
-python src\rag.py ask "What did I dislike about Sinners?" --retrieval semantic --index data\processed\rag_index_mxbai.json --top-k 3
 ```
 
 The response includes numbered citations and the matched local files. The
