@@ -1,0 +1,393 @@
+{
+  "description": "Deterministic statistics derived from data/raw/movies.yaml.",
+  "totals": {
+    "unique_movies": 61,
+    "viewing_count": 64,
+    "rewatch_count": 3
+  },
+  "cinemas": [
+    {
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "unique_movies": 14,
+      "viewing_count": 14,
+      "rewatch_count": 1,
+      "movies": [
+        {
+          "id": "a-minecraft-movie",
+          "title": "A Minecraft Movie"
+        },
+        {
+          "id": "exit-8",
+          "title": "Exit 8"
+        },
+        {
+          "id": "final-destination-bloodlines",
+          "title": "Final Destinaion Bloodlines"
+        },
+        {
+          "id": "good-fortune",
+          "title": "Good Fortune"
+        },
+        {
+          "id": "leviticus",
+          "title": "Leviticus"
+        },
+        {
+          "id": "m3gan-2",
+          "title": "M3GAN 2.0"
+        },
+        {
+          "id": "obsession",
+          "title": "Obsession"
+        },
+        {
+          "id": "project-hail-mary",
+          "title": "Project Hail Mary"
+        },
+        {
+          "id": "supergirl",
+          "title": "Supergirl"
+        },
+        {
+          "id": "the-bad-guys-2",
+          "title": "The Bad Guys 2"
+        },
+        {
+          "id": "the-life-of-chuck",
+          "title": "The Life of Chuck"
+        },
+        {
+          "id": "thunderbolts",
+          "title": "Thunderbolts*"
+        },
+        {
+          "id": "weapons",
+          "title": "Weapons"
+        },
+        {
+          "id": "zootopia-2",
+          "title": "Zootopia 2"
+        }
+      ]
+    },
+    {
+      "location": "Cineplex Cinemas Langley",
+      "unique_movies": 5,
+      "viewing_count": 5,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "back-to-the-future",
+          "title": "Back To The Future"
+        },
+        {
+          "id": "jaws",
+          "title": "Jaws"
+        },
+        {
+          "id": "la-la-land",
+          "title": "La La Land"
+        },
+        {
+          "id": "the-odyssey",
+          "title": "The Odyssey"
+        },
+        {
+          "id": "your-name",
+          "title": "Your Name."
+        }
+      ]
+    },
+    {
+      "location": "Cineplex Cinemas Marine Gateway and VIP",
+      "unique_movies": 2,
+      "viewing_count": 2,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "relay",
+          "title": "Relay"
+        },
+        {
+          "id": "the-roses",
+          "title": "The Roses"
+        }
+      ]
+    },
+    {
+      "location": "Cineplex Cinemas Metropolis",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "demon-slayer",
+          "title": "Demon Slayer Kimetsu No Yaiba Infinity Castle"
+        }
+      ]
+    },
+    {
+      "location": "Cineplex Cinemas Park Royal and VIP",
+      "unique_movies": 5,
+      "viewing_count": 5,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "minions-the-rise-of-gru",
+          "title": "Minions The rise of Gru"
+        },
+        {
+          "id": "rental-faily",
+          "title": "Rental Family"
+        },
+        {
+          "id": "sinners",
+          "title": "Sinners"
+        },
+        {
+          "id": "the-long-walk",
+          "title": "The Long Walk"
+        },
+        {
+          "id": "the-phoenician-scheme",
+          "title": "The Phoenician Scheme"
+        }
+      ]
+    },
+    {
+      "location": "Cineplex Cinemas Strawberry Hill",
+      "unique_movies": 4,
+      "viewing_count": 4,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "cars",
+          "title": "Cars"
+        },
+        {
+          "id": "mission-impossible",
+          "title": "Mission Impossible The Final Reckoning"
+        },
+        {
+          "id": "obsession",
+          "title": "Obsession"
+        },
+        {
+          "id": "scary-movie",
+          "title": "Scary Movie"
+        }
+      ]
+    },
+    {
+      "location": "Cineplex Odeon International Village Cinemas",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "sorry-baby",
+          "title": "Sorry, Baby"
+        }
+      ]
+    },
+    {
+      "location": "Cineplex VIP Cinemas Brentwood",
+      "unique_movies": 3,
+      "viewing_count": 3,
+      "rewatch_count": 1,
+      "movies": [
+        {
+          "id": "28-years-later",
+          "title": "28 Years Later"
+        },
+        {
+          "id": "final-destination-bloodlines",
+          "title": "Final Destinaion Bloodlines"
+        },
+        {
+          "id": "nobody-2",
+          "title": "Nobody 2"
+        }
+      ]
+    },
+    {
+      "location": "Landmark Cinemas New Westminster",
+      "unique_movies": 13,
+      "viewing_count": 13,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "chainsaw-man",
+          "title": "Chainsaw Man The Movie Reze Arc"
+        },
+        {
+          "id": "eddington",
+          "title": "Eddington"
+        },
+        {
+          "id": "elio",
+          "title": "Elio"
+        },
+        {
+          "id": "final-destination",
+          "title": "Final Destination"
+        },
+        {
+          "id": "inception",
+          "title": "Inception"
+        },
+        {
+          "id": "jurassic-world-rebirth",
+          "title": "Jurassic World Rebirth"
+        },
+        {
+          "id": "ne-zha-2",
+          "title": "Ne Zha 2"
+        },
+        {
+          "id": "regretting-you",
+          "title": "Regretting You"
+        },
+        {
+          "id": "roofman",
+          "title": "Roofman"
+        },
+        {
+          "id": "sketch",
+          "title": "Sketch"
+        },
+        {
+          "id": "the-godfather",
+          "title": "The Godfather"
+        },
+        {
+          "id": "the-naked-gun",
+          "title": "The Naked Gun"
+        },
+        {
+          "id": "toy-story",
+          "title": "Toy Story"
+        }
+      ]
+    },
+    {
+      "location": "Landmark Cinemas Surrey Guildford",
+      "unique_movies": 2,
+      "viewing_count": 2,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "f1-the-movie",
+          "title": "F1 The Movie"
+        },
+        {
+          "id": "tron-ares",
+          "title": "Tron Ares"
+        }
+      ]
+    },
+    {
+      "location": "Scotiabank Theatre Vancouver",
+      "unique_movies": 10,
+      "viewing_count": 10,
+      "rewatch_count": 1,
+      "movies": [
+        {
+          "id": "fnaf2",
+          "title": "Five Nights At Freddys 2"
+        },
+        {
+          "id": "how-to-train-your-dragon",
+          "title": "How To Train Your Dragon"
+        },
+        {
+          "id": "michael",
+          "title": "Michael"
+        },
+        {
+          "id": "sinners",
+          "title": "Sinners"
+        },
+        {
+          "id": "spiderman",
+          "title": "Spider-Man Brand New Day"
+        },
+        {
+          "id": "superman",
+          "title": "Superman"
+        },
+        {
+          "id": "the-conjuring-last-rites",
+          "title": "The Conjuring Last Rites"
+        },
+        {
+          "id": "fantastic-4",
+          "title": "The Fantastic 4 First Steps"
+        },
+        {
+          "id": "the-shining",
+          "title": "The Shining"
+        },
+        {
+          "id": "toy-story-5",
+          "title": "Toy Story 5"
+        }
+      ]
+    },
+    {
+      "location": "SilverCity RiverPort Cinemas",
+      "unique_movies": 2,
+      "viewing_count": 2,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "backrooms",
+          "title": "Backrooms"
+        },
+        {
+          "id": "hoppers",
+          "title": "Hoppers"
+        }
+      ]
+    },
+    {
+      "location": "SilverCity Riverport Cinemas",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "dead-to-rights",
+          "title": "Dead to Rights"
+        }
+      ]
+    },
+    {
+      "location": "The Park Theatre",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "rewatch_count": 0,
+      "movies": [
+        {
+          "id": "one-battle-after-another",
+          "title": "One Battle After Another"
+        }
+      ]
+    }
+  ],
+  "viewings_by_format": {
+    "70 MM": 1,
+    "AVX": 2,
+    "AVX DBOX": 1,
+    "IMAX": 15,
+    "IMAX 70MM": 1,
+    "Premiere": 2,
+    "Regular": 25,
+    "Screen X": 5,
+    "VIP": 12
+  },
+  "viewings_by_year": {
+    "2025": 48,
+    "2026": 16
+  }
+}

@@ -25,6 +25,7 @@ PROCESSED = ROOT / "data" / "processed"
 MOVIES = PROCESSED / "movies.json"
 DOCUMENTS = PROCESSED / "documents.jsonl"
 INDEX = PROCESSED / "rag_index.json"
+STATISTICS = PROCESSED / "viewing_statistics.json"
 OLLAMA_URL = "http://localhost:11434"
 SEMANTIC_CHUNK_MIN_WORDS = 80
 SEMANTIC_CHUNK_MAX_WORDS = 280
@@ -235,6 +236,51 @@ def index_path(value: str) -> Path:
     return path if path.is_absolute() else ROOT / path
 
 
+def matching_cinema(question: str, cinemas: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Match a natural-language cinema reference without guessing on ties."""
+    normalized_question = " ".join(tokenize(question))
+    matches = [cinema for cinema in cinemas if " ".join(tokenize(cinema["location"])) in normalized_question]
+    if len(matches) == 1:
+        return matches[0]
+
+    ignored = {"how", "many", "movie", "movies", "viewing", "viewings", "did", "have", "i", "watched",
+               "watch", "at", "in", "the", "a", "an", "cinema", "cinemas", "theatre", "theatres", "theater"}
+    question_terms = set(tokenize(question)) - ignored
+    scored: list[tuple[float, dict[str, Any]]] = []
+    for cinema in cinemas:
+        location_terms = set(tokenize(cinema["location"])) - {"cinema", "cinemas", "theatre", "theatres", "theater"}
+        score = len(question_terms & location_terms) / len(location_terms) if location_terms else 0.0
+        scored.append((score, cinema))
+    scored.sort(key=lambda item: item[0], reverse=True)
+    if not scored or scored[0][0] < 0.5:
+        return None
+    if len(scored) > 1 and scored[0][0] - scored[1][0] < 0.15:
+        return None
+    return scored[0][1]
+
+
+def answer_analytics_question(question: str) -> str | None:
+    """Answer supported count questions from aggregates, never from RAG context."""
+    normalized = question.lower()
+    if "how many" not in normalized or not any(word in normalized for word in ("movie", "movies", "viewing", "viewings")):
+        return None
+    if not STATISTICS.exists():
+        raise RuntimeError("Viewing statistics are missing. Run `python src/yaml_to_json.py` first.")
+    statistics = json.loads(STATISTICS.read_text(encoding="utf-8"))
+    is_viewing_question = "viewing" in normalized
+    cinema = matching_cinema(question, statistics["cinemas"])
+    if cinema:
+        count_key = "viewing_count" if is_viewing_question else "unique_movies"
+        label = "viewings" if is_viewing_question else "unique movies"
+        return f"You recorded {cinema[count_key]} {label} at {cinema['location']}.\n\nSource: data/processed/viewing_statistics.json"
+    if "total" not in normalized and any(word in normalized for word in ("cinema", "theatre", "theater", " at ", " in ")):
+        locations = "; ".join(cinema["location"] for cinema in statistics["cinemas"])
+        return f"I could not match a cinema in that question. Recorded cinemas: {locations}."
+    total_key = "viewing_count" if is_viewing_question else "unique_movies"
+    label = "viewings" if is_viewing_question else "unique movies"
+    return f"You recorded {statistics['totals'][total_key]} {label} in total.\n\nSource: data/processed/viewing_statistics.json"
+
+
 def build(args: argparse.Namespace) -> None:
     documents = make_documents(args.chunk_model)
     vectors = embed([doc["text"] for doc in documents], args.embed_model)
@@ -276,6 +322,10 @@ def search(question: str, top_k: int, retrieval: str, hybrid_weight: float, path
 
 
 def ask(args: argparse.Namespace) -> None:
+    analytics_answer = answer_analytics_question(args.question)
+    if analytics_answer:
+        print(analytics_answer)
+        return
     results = search(args.question, args.top_k, args.retrieval, args.hybrid_weight, index_path(args.index))
     context = "\n\n".join(
         f"[{i}] {item['title']} — {item['section']} ({item['source']})\n{item['text']}"

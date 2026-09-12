@@ -108,6 +108,7 @@ data/raw/                 # Hand-authored source of truth
   <movie-id>.md           # Personal notes, linked with movie_id frontmatter
 data/processed/
   movies.json             # YAML converted to JSON
+  viewing_statistics.json # Exact aggregate counts derived from YAML
   documents.jsonl         # Inspectable retrieval chunks (generated)
   rag_index*.json         # Local embeddings and chunks (generated, ignored)
 src/
@@ -124,7 +125,12 @@ inference on the local machine.
 
 ### Ingestion and chunking
 
-`src/yaml_to_json.py` converts `data/raw/movies.yaml` into `movies.json`.
+`src/yaml_to_json.py` converts `data/raw/movies.yaml` into `movies.json` and
+derives `viewing_statistics.json`. The statistics file contains exact totals,
+unique-movie and viewing counts per cinema, rewatch counts, formats, and viewing
+years. It is the source used for quantitative questions; the language model is
+not asked to count RAG chunks.
+
 During `rag.py build`, each movie becomes one **metadata chunk** containing its
 title, year, director, genres, rating, and viewing history. Markdown
 frontmatter `movie_id` must match a YAML movie `id`; it is the join key between
@@ -228,6 +234,22 @@ Ask a question with retrieval and a local answer:
 python src\rag.py ask "Which movie did I find most immersive, and why?"
 python src\rag.py ask "What did I dislike about Sinners?" --top-k 3
 ```
+
+### Exact viewing-statistics questions
+
+Count questions are routed to the deterministic aggregates in
+`viewing_statistics.json`, rather than retrieval and generation. This prevents
+the common RAG failure mode of counting only the retrieved documents.
+
+```powershell
+python src\rag.py ask "How many movies have I watched in total?"
+python src\rag.py ask "How many movies did I watch at Cineplex Cinemas Langley?"
+python src\rag.py ask "How many viewings did I record at Scotiabank Theatre Vancouver?"
+```
+
+For these questions, “movies” means distinct movies and “viewings” includes
+rewatches. Run `python src\yaml_to_json.py` after editing `movies.yaml` so the
+statistics remain current.
 
 The response includes numbered citations and the matched local files. The
 derived `documents.jsonl` and vector index are intentionally ignored by Git;
