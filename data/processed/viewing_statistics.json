@@ -8,8 +8,8 @@
   "cinemas": [
     {
       "location": "Cineplex Cinemas Coquitlam and VIP",
-      "unique_movies": 14,
-      "viewing_count": 14,
+      "unique_movies": 15,
+      "viewing_count": 15,
       "rewatch_count": 1,
       "movies": [
         {
@@ -47,6 +47,10 @@
         {
           "id": "supergirl",
           "title": "Supergirl"
+        },
+        {
+          "id": "superman",
+          "title": "Superman"
         },
         {
           "id": "the-bad-guys-2",
@@ -288,8 +292,8 @@
     },
     {
       "location": "Scotiabank Theatre Vancouver",
-      "unique_movies": 10,
-      "viewing_count": 10,
+      "unique_movies": 9,
+      "viewing_count": 9,
       "rewatch_count": 1,
       "movies": [
         {
@@ -311,10 +315,6 @@
         {
           "id": "spiderman",
           "title": "Spider-Man Brand New Day"
-        },
-        {
-          "id": "superman",
-          "title": "Superman"
         },
         {
           "id": "the-conjuring-last-rites",
@@ -1386,7 +1386,7 @@
         "Action"
       ],
       "date_watched": "July 2025",
-      "location": "Scotiabank Theatre Vancouver",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
       "format": "IMAX",
       "rewatch": false
     },
