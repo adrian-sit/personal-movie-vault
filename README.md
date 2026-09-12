@@ -33,8 +33,7 @@ Although this project's data content is relatively small and could fit in a mode
 - [ ] Hybrid keyword and semantic retrieval
 - [ ] Retrieval-augmented generation (RAG)
 - [ ] Build a semi-automatic retrieval evaluation pipeline
-- [ ] Enhance quantitative information retrieval accuracy through data processing
-- [ ] Conduct exploratory data analysis
+- [ ] Perform data processing and conduct exploratory data analysis
       
 
 ## Raw Dataset Format
