@@ -30,6 +30,11 @@ OLLAMA_URL = "http://localhost:11434"
 SEMANTIC_CHUNK_MIN_WORDS = 80
 SEMANTIC_CHUNK_MAX_WORDS = 280
 SEMANTIC_BREAK_PERCENTILE = 0.80
+BM25_STOP_WORDS = {
+    "a", "an", "and", "are", "at", "did", "do", "does", "for", "from", "have", "how", "i", "in", "is",
+    "it", "many", "me", "my", "of", "on", "or", "show", "the", "to", "was", "watch", "watched", "what",
+    "which", "with", "would", "you",
+}
 
 
 def ollama(endpoint: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -150,7 +155,7 @@ def make_documents(chunk_model: str) -> list[dict[str, Any]]:
         raise RuntimeError("data/processed/movies.json is missing. Run src/yaml_to_json.py first.")
     movies = json.loads(MOVIES.read_text(encoding="utf-8"))
     by_id = {movie["id"]: movie for movie in movies}
-    documents: list[dict[str, Any]] = []
+    documents = make_statistics_documents()
     for movie in movies:
         documents.append({
             "id": f"{movie['id']}:metadata",
@@ -191,8 +196,8 @@ def cosine(left: list[float], right: list[float]) -> float:
 
 
 def tokenize(text: str) -> list[str]:
-    """Keep a small, predictable tokenizer for the lexical BM25 baseline."""
-    return re.findall(r"[a-z0-9]+", text.lower())
+    """Keep meaningful terms for the lexical BM25 baseline."""
+    return [token for token in re.findall(r"[a-z0-9]+", text.lower()) if token not in BM25_STOP_WORDS]
 
 
 def bm25_scores(question: str, documents: list[dict[str, Any]]) -> list[float]:
@@ -236,49 +241,73 @@ def index_path(value: str) -> Path:
     return path if path.is_absolute() else ROOT / path
 
 
-def matching_cinema(question: str, cinemas: list[dict[str, Any]]) -> dict[str, Any] | None:
-    """Match a natural-language cinema reference without guessing on ties."""
-    normalized_question = " ".join(tokenize(question))
-    matches = [cinema for cinema in cinemas if " ".join(tokenize(cinema["location"])) in normalized_question]
-    if len(matches) == 1:
-        return matches[0]
-
-    ignored = {"how", "many", "movie", "movies", "viewing", "viewings", "did", "have", "i", "watched",
-               "watch", "at", "in", "the", "a", "an", "cinema", "cinemas", "theatre", "theatres", "theater"}
-    question_terms = set(tokenize(question)) - ignored
-    scored: list[tuple[float, dict[str, Any]]] = []
-    for cinema in cinemas:
-        location_terms = set(tokenize(cinema["location"])) - {"cinema", "cinemas", "theatre", "theatres", "theater"}
-        score = len(question_terms & location_terms) / len(location_terms) if location_terms else 0.0
-        scored.append((score, cinema))
-    scored.sort(key=lambda item: item[0], reverse=True)
-    if not scored or scored[0][0] < 0.5:
-        return None
-    if len(scored) > 1 and scored[0][0] - scored[1][0] < 0.15:
-        return None
-    return scored[0][1]
-
-
-def answer_analytics_question(question: str) -> str | None:
-    """Answer supported count questions from aggregates, never from RAG context."""
-    normalized = question.lower()
-    if "how many" not in normalized or not any(word in normalized for word in ("movie", "movies", "viewing", "viewings")):
-        return None
+def make_statistics_documents() -> list[dict[str, Any]]:
+    """Expose deterministic aggregates as retrievable, citable RAG documents."""
     if not STATISTICS.exists():
         raise RuntimeError("Viewing statistics are missing. Run `python src/yaml_to_json.py` first.")
     statistics = json.loads(STATISTICS.read_text(encoding="utf-8"))
-    is_viewing_question = "viewing" in normalized
-    cinema = matching_cinema(question, statistics["cinemas"])
-    if cinema:
-        count_key = "viewing_count" if is_viewing_question else "unique_movies"
-        label = "viewings" if is_viewing_question else "unique movies"
-        return f"You recorded {cinema[count_key]} {label} at {cinema['location']}.\n\nSource: data/processed/viewing_statistics.json"
-    if "total" not in normalized and any(word in normalized for word in ("cinema", "theatre", "theater", " at ", " in ")):
-        locations = "; ".join(cinema["location"] for cinema in statistics["cinemas"])
-        return f"I could not match a cinema in that question. Recorded cinemas: {locations}."
-    total_key = "viewing_count" if is_viewing_question else "unique_movies"
-    label = "viewings" if is_viewing_question else "unique movies"
-    return f"You recorded {statistics['totals'][total_key]} {label} in total.\n\nSource: data/processed/viewing_statistics.json"
+    source = "data/processed/viewing_statistics.json"
+    totals = statistics["totals"]
+    documents = [{
+        "id": "statistics:overview",
+        "movie_id": None,
+        "title": "Viewing Statistics",
+        "section": "Overview",
+        "source": source,
+        "statistics_dimension": "overview",
+        "statistics_value": "total",
+        "chunk_index": 1,
+        "chunk_count": 1,
+        "text": (
+            "Structured data answer for: how many movies have I watched in total? "
+            "Deterministic viewing statistics. "
+            f"Total unique movies: {totals['unique_movies']}. "
+            f"Total viewings: {totals['viewing_count']}. "
+            f"Rewatches: {totals['rewatch_count']}."
+        ),
+    }]
+
+    def add_group_documents(groups: list[dict[str, Any]], group_key: str, section: str) -> None:
+        for group in groups:
+            value = group[group_key]
+            document_id = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+            titles = "; ".join(movie["title"] for movie in group["movies"])
+            documents.append({
+                "id": f"statistics:{section.lower()}:{document_id}",
+                "movie_id": None,
+                "title": "Viewing Statistics",
+                "section": section,
+                "source": source,
+                "statistics_dimension": section.lower(),
+                "statistics_value": value,
+                "chunk_index": 1,
+                "chunk_count": 1,
+                "text": (
+                    f"Structured data answer for: which movies did I watch in {value}, "
+                    f"and how many movies or viewings did I record there? "
+                    f"Deterministic statistics for {section.lower()} {value}. "
+                    f"Unique movies: {group['unique_movies']}. "
+                    f"Viewings: {group['viewing_count']}. "
+                    f"Movies: {titles or 'none'}."
+                ),
+            })
+
+    add_group_documents(statistics["cinemas"], "location", "Cinema")
+    add_group_documents(statistics["formats"], "format", "Format")
+    for year, count in statistics["viewings_by_year"].items():
+        documents.append({
+            "id": f"statistics:year:{year}",
+            "movie_id": None,
+            "title": "Viewing Statistics",
+            "section": "Viewing Year",
+            "source": source,
+            "statistics_dimension": "viewing year",
+            "statistics_value": year,
+            "chunk_index": 1,
+            "chunk_count": 1,
+            "text": f"Deterministic viewing statistics for {year}. Total viewings: {count}.",
+        })
+    return documents
 
 
 def build(args: argparse.Namespace) -> None:
@@ -314,6 +343,15 @@ def search(question: str, top_k: int, retrieval: str, hybrid_weight: float, path
         lexical = min_max_normalize(lexical_scores)
         scores = [hybrid_weight * dense_score + (1 - hybrid_weight) * lexical_score
                   for dense_score, lexical_score in zip(dense, lexical)]
+    question_terms = set(tokenize(question))
+    for position, document in enumerate(documents):
+        value = document.get("statistics_value")
+        if not value:
+            continue
+        value_terms = set(tokenize(str(value))) - {"cinema", "cinemas", "theatre", "theatres", "theater"}
+        if value_terms and value_terms <= question_terms:
+            # Prefer an exact structured-data value (IMAX) over a related one (IMAX 70MM).
+            scores[position] += 100
     ranked = sorted(
         ({**document, "score": score} for document, score in zip(documents, scores)),
         key=lambda item: item["score"], reverse=True,
@@ -322,10 +360,6 @@ def search(question: str, top_k: int, retrieval: str, hybrid_weight: float, path
 
 
 def ask(args: argparse.Namespace) -> None:
-    analytics_answer = answer_analytics_question(args.question)
-    if analytics_answer:
-        print(analytics_answer)
-        return
     results = search(args.question, args.top_k, args.retrieval, args.hybrid_weight, index_path(args.index))
     context = "\n\n".join(
         f"[{i}] {item['title']} — {item['section']} ({item['source']})\n{item['text']}"
@@ -333,15 +367,21 @@ def ask(args: argparse.Namespace) -> None:
     )
     prompt = (
         "Answer only from the supplied personal movie-vault context. If it does not "
-        "contain the answer, say so. Treat the notes as the viewer's opinion, not "
-        "objective fact. Cite each claim with [1], [2], etc.\n\n"
+        "contain the answer, say so. Treat notes as the viewer's opinion, not "
+        "objective fact. When a source is viewing_statistics.json, treat it as the "
+        "authoritative deterministic source for counts, filters, formats, locations, "
+        "and viewing records; do not calculate from partial movie chunks. For a "
+        "question asking which movies match a statistics entry, return every title "
+        "in that entry's `Movies:` list, not one example. Respect exact labels: "
+        "`IMAX` and `IMAX 70MM` are distinct formats unless the question explicitly "
+        "asks to combine them. Cite each claim with [1], [2], etc.\n\n"
         f"Context:\n{context}\n\nQuestion: {args.question}\nAnswer:"
     )
     answer = ollama("/api/generate", {"model": args.chat_model, "prompt": prompt, "stream": False})["response"].strip()
     print(answer)
     print(f"\nSources ({args.retrieval} retrieval):")
     for i, item in enumerate(results, 1):
-        print(f"[{i}] {item['title']} — {item['section']} ({item['source']}; score {item['score']:.3f})")
+        print(f"[{i}] {item['id']} — {item['title']} — {item['section']} ({item['source']}; score {item['score']:.3f})")
 
 
 def main() -> None:

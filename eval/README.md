@@ -38,8 +38,10 @@ selected index, preventing stale chunks from producing misleading metrics.
 | `combine` | Join metadata with notes, or synthesize several facts | Recall across the required chunks | Multi-hop reasoning, citations, and answer completeness |
 
 For exact count, filter, and metadata-ranking questions, prefer the structured
-analytics layer over RAG. These should be tested as deterministic data queries
-with expected outputs, not as top-*k* retrieval tests.
+analytics layer over RAG. They are not top-*k* retrieval tests: the chat model
+interprets natural-language questions against deterministic statistics. Evaluate
+them separately for correct record selection and presentation, ideally with a
+small author-reviewed set of varied phrasings rather than one fixed template.
 
 ## Running comparisons
 

@@ -128,8 +128,9 @@ inference on the local machine.
 `src/yaml_to_json.py` converts `data/raw/movies.yaml` into `movies.json` and
 derives `viewing_statistics.json`. The statistics file contains exact totals,
 unique-movie and viewing counts per cinema, rewatch counts, formats, and viewing
-years. It is the source used for quantitative questions; the language model is
-not asked to count RAG chunks.
+years, plus the normalized per-viewing records and the movie lists for each
+cinema and format. It is the source used for quantitative questions; the
+language model is never asked to count RAG chunks.
 
 During `rag.py build`, each movie becomes one **metadata chunk** containing its
 title, year, director, genres, rating, and viewing history. Markdown
@@ -235,21 +236,32 @@ python src\rag.py ask "Which movie did I find most immersive, and why?"
 python src\rag.py ask "What did I dislike about Sinners?" --top-k 3
 ```
 
-### Exact viewing-statistics questions
+### Structured-data questions
 
-Count questions are routed to the deterministic aggregates in
-`viewing_statistics.json`, rather than retrieval and generation. This prevents
-the common RAG failure mode of counting only the retrieved documents.
+During `rag.py build`, deterministic summaries from
+`viewing_statistics.json` are added to the same retrieval index as movie notes.
+There is one overview chunk plus dedicated chunks for every cinema, format, and
+viewing year. A format chunk, for example, includes its exact unique-movie and
+viewing counts and its complete movie list.
+
+This lets semantic, BM25, and hybrid retrieval find structured answers without
+requiring a fixed question template. The answer prompt treats a retrieved
+`viewing_statistics.json` chunk as authoritative for counts, filters, formats,
+locations, and viewing records, instead of asking the model to count partial
+movie metadata chunks. Questions about opinions or reflections still retrieve
+the Markdown notes.
 
 ```powershell
 python src\rag.py ask "How many movies have I watched in total?"
 python src\rag.py ask "How many movies did I watch at Cineplex Cinemas Langley?"
 python src\rag.py ask "How many viewings did I record at Scotiabank Theatre Vancouver?"
+python src\rag.py ask "Which movies did I watch in IMAX?"
+python src\rag.py ask "Show my highest-rated movies that I watched in Vancouver."
 ```
 
-For these questions, “movies” means distinct movies and “viewings” includes
-rewatches. Run `python src\yaml_to_json.py` after editing `movies.yaml` so the
-statistics remain current.
+“Movies” refers to distinct movies and “viewings” includes rewatches. Run
+`python src\yaml_to_json.py` and then `python src\rag.py build` after editing
+`movies.yaml` so the statistics and index remain current.
 
 The response includes numbered citations and the matched local files. The
 derived `documents.jsonl` and vector index are intentionally ignored by Git;

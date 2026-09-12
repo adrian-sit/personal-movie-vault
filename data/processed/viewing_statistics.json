@@ -375,6 +375,323 @@
       ]
     }
   ],
+  "formats": [
+    {
+      "format": "70 MM",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "movies": [
+        {
+          "id": "one-battle-after-another",
+          "title": "One Battle After Another"
+        }
+      ]
+    },
+    {
+      "format": "AVX",
+      "unique_movies": 2,
+      "viewing_count": 2,
+      "movies": [
+        {
+          "id": "mission-impossible",
+          "title": "Mission Impossible The Final Reckoning"
+        },
+        {
+          "id": "obsession",
+          "title": "Obsession"
+        }
+      ]
+    },
+    {
+      "format": "AVX DBOX",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "movies": [
+        {
+          "id": "backrooms",
+          "title": "Backrooms"
+        }
+      ]
+    },
+    {
+      "format": "IMAX",
+      "unique_movies": 15,
+      "viewing_count": 15,
+      "movies": [
+        {
+          "id": "back-to-the-future",
+          "title": "Back To The Future"
+        },
+        {
+          "id": "dead-to-rights",
+          "title": "Dead to Rights"
+        },
+        {
+          "id": "how-to-train-your-dragon",
+          "title": "How To Train Your Dragon"
+        },
+        {
+          "id": "jaws",
+          "title": "Jaws"
+        },
+        {
+          "id": "michael",
+          "title": "Michael"
+        },
+        {
+          "id": "project-hail-mary",
+          "title": "Project Hail Mary"
+        },
+        {
+          "id": "sinners",
+          "title": "Sinners"
+        },
+        {
+          "id": "spiderman",
+          "title": "Spider-Man Brand New Day"
+        },
+        {
+          "id": "supergirl",
+          "title": "Supergirl"
+        },
+        {
+          "id": "superman",
+          "title": "Superman"
+        },
+        {
+          "id": "the-conjuring-last-rites",
+          "title": "The Conjuring Last Rites"
+        },
+        {
+          "id": "fantastic-4",
+          "title": "The Fantastic 4 First Steps"
+        },
+        {
+          "id": "the-shining",
+          "title": "The Shining"
+        },
+        {
+          "id": "toy-story-5",
+          "title": "Toy Story 5"
+        },
+        {
+          "id": "zootopia-2",
+          "title": "Zootopia 2"
+        }
+      ]
+    },
+    {
+      "format": "IMAX 70MM",
+      "unique_movies": 1,
+      "viewing_count": 1,
+      "movies": [
+        {
+          "id": "the-odyssey",
+          "title": "The Odyssey"
+        }
+      ]
+    },
+    {
+      "format": "Premiere",
+      "unique_movies": 2,
+      "viewing_count": 2,
+      "movies": [
+        {
+          "id": "elio",
+          "title": "Elio"
+        },
+        {
+          "id": "toy-story",
+          "title": "Toy Story"
+        }
+      ]
+    },
+    {
+      "format": "Regular",
+      "unique_movies": 25,
+      "viewing_count": 25,
+      "movies": [
+        {
+          "id": "cars",
+          "title": "Cars"
+        },
+        {
+          "id": "chainsaw-man",
+          "title": "Chainsaw Man The Movie Reze Arc"
+        },
+        {
+          "id": "demon-slayer",
+          "title": "Demon Slayer Kimetsu No Yaiba Infinity Castle"
+        },
+        {
+          "id": "eddington",
+          "title": "Eddington"
+        },
+        {
+          "id": "exit-8",
+          "title": "Exit 8"
+        },
+        {
+          "id": "final-destination",
+          "title": "Final Destination"
+        },
+        {
+          "id": "fnaf2",
+          "title": "Five Nights At Freddys 2"
+        },
+        {
+          "id": "hoppers",
+          "title": "Hoppers"
+        },
+        {
+          "id": "inception",
+          "title": "Inception"
+        },
+        {
+          "id": "jurassic-world-rebirth",
+          "title": "Jurassic World Rebirth"
+        },
+        {
+          "id": "la-la-land",
+          "title": "La La Land"
+        },
+        {
+          "id": "leviticus",
+          "title": "Leviticus"
+        },
+        {
+          "id": "m3gan-2",
+          "title": "M3GAN 2.0"
+        },
+        {
+          "id": "minions-the-rise-of-gru",
+          "title": "Minions The rise of Gru"
+        },
+        {
+          "id": "ne-zha-2",
+          "title": "Ne Zha 2"
+        },
+        {
+          "id": "obsession",
+          "title": "Obsession"
+        },
+        {
+          "id": "regretting-you",
+          "title": "Regretting You"
+        },
+        {
+          "id": "roofman",
+          "title": "Roofman"
+        },
+        {
+          "id": "scary-movie",
+          "title": "Scary Movie"
+        },
+        {
+          "id": "sketch",
+          "title": "Sketch"
+        },
+        {
+          "id": "sorry-baby",
+          "title": "Sorry, Baby"
+        },
+        {
+          "id": "the-godfather",
+          "title": "The Godfather"
+        },
+        {
+          "id": "the-long-walk",
+          "title": "The Long Walk"
+        },
+        {
+          "id": "the-naked-gun",
+          "title": "The Naked Gun"
+        },
+        {
+          "id": "your-name",
+          "title": "Your Name."
+        }
+      ]
+    },
+    {
+      "format": "Screen X",
+      "unique_movies": 5,
+      "viewing_count": 5,
+      "movies": [
+        {
+          "id": "f1-the-movie",
+          "title": "F1 The Movie"
+        },
+        {
+          "id": "the-bad-guys-2",
+          "title": "The Bad Guys 2"
+        },
+        {
+          "id": "thunderbolts",
+          "title": "Thunderbolts*"
+        },
+        {
+          "id": "tron-ares",
+          "title": "Tron Ares"
+        },
+        {
+          "id": "weapons",
+          "title": "Weapons"
+        }
+      ]
+    },
+    {
+      "format": "VIP",
+      "unique_movies": 11,
+      "viewing_count": 12,
+      "movies": [
+        {
+          "id": "28-years-later",
+          "title": "28 Years Later"
+        },
+        {
+          "id": "a-minecraft-movie",
+          "title": "A Minecraft Movie"
+        },
+        {
+          "id": "final-destination-bloodlines",
+          "title": "Final Destinaion Bloodlines"
+        },
+        {
+          "id": "good-fortune",
+          "title": "Good Fortune"
+        },
+        {
+          "id": "nobody-2",
+          "title": "Nobody 2"
+        },
+        {
+          "id": "relay",
+          "title": "Relay"
+        },
+        {
+          "id": "rental-faily",
+          "title": "Rental Family"
+        },
+        {
+          "id": "sinners",
+          "title": "Sinners"
+        },
+        {
+          "id": "the-life-of-chuck",
+          "title": "The Life of Chuck"
+        },
+        {
+          "id": "the-phoenician-scheme",
+          "title": "The Phoenician Scheme"
+        },
+        {
+          "id": "the-roses",
+          "title": "The Roses"
+        }
+      ]
+    }
+  ],
   "viewings_by_format": {
     "70 MM": 1,
     "AVX": 2,
@@ -389,5 +706,960 @@
   "viewings_by_year": {
     "2025": 48,
     "2026": 16
-  }
+  },
+  "viewing_records": [
+    {
+      "movie_id": "28-years-later",
+      "title": "28 Years Later",
+      "movie_year": 2025,
+      "rating": 5.5,
+      "genres": [
+        "Horror",
+        "Thriller",
+        "Science Fiction"
+      ],
+      "date_watched": "June 2025",
+      "location": "Cineplex VIP Cinemas Brentwood",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "a-minecraft-movie",
+      "title": "A Minecraft Movie",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Family",
+        "Fantasy",
+        "Comedy",
+        "Adventure"
+      ],
+      "date_watched": "April 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "back-to-the-future",
+      "title": "Back To The Future",
+      "movie_year": 1985,
+      "rating": 8,
+      "genres": [
+        "Adeventure",
+        "Comedy",
+        "Science Fiction"
+      ],
+      "date_watched": "November 2025",
+      "location": "Cineplex Cinemas Langley",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "backrooms",
+      "title": "Backrooms",
+      "movie_year": 2026,
+      "rating": 7.5,
+      "genres": [
+        "Horror",
+        "Mystery",
+        "Science Fiction"
+      ],
+      "date_watched": "May 2026",
+      "location": "SilverCity RiverPort Cinemas",
+      "format": "AVX DBOX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "cars",
+      "title": "Cars",
+      "movie_year": 2006,
+      "rating": 7,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy",
+        "Family"
+      ],
+      "date_watched": "September 2026",
+      "location": "Cineplex Cinemas Strawberry Hill",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "chainsaw-man",
+      "title": "Chainsaw Man The Movie Reze Arc",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy",
+        "Comedy"
+      ],
+      "date_watched": "November 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "dead-to-rights",
+      "title": "Dead to Rights",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Drama",
+        "War",
+        "History"
+      ],
+      "date_watched": "August 2025",
+      "location": "SilverCity Riverport Cinemas",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "demon-slayer",
+      "title": "Demon Slayer Kimetsu No Yaiba Infinity Castle",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Animation",
+        "Action",
+        "Fantasy"
+      ],
+      "date_watched": "November 2025",
+      "location": "Cineplex Cinemas Metropolis",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "eddington",
+      "title": "Eddington",
+      "movie_year": 2025,
+      "rating": 6.5,
+      "genres": [
+        "Western",
+        "Comedy",
+        "Crime"
+      ],
+      "date_watched": "July 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "elio",
+      "title": "Elio",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Science Fiction",
+        "Family",
+        "Comedy"
+      ],
+      "date_watched": "July 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Premiere",
+      "rewatch": false
+    },
+    {
+      "movie_id": "exit-8",
+      "title": "Exit 8",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Horror",
+        "Mystery",
+        "Thriller"
+      ],
+      "date_watched": "April 2026",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "f1-the-movie",
+      "title": "F1 The Movie",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Action",
+        "Drama"
+      ],
+      "date_watched": "July 2025",
+      "location": "Landmark Cinemas Surrey Guildford",
+      "format": "Screen X",
+      "rewatch": false
+    },
+    {
+      "movie_id": "final-destination-bloodlines",
+      "title": "Final Destinaion Bloodlines",
+      "movie_year": 2025,
+      "rating": 9.5,
+      "genres": [
+        "Horror",
+        "Mystery"
+      ],
+      "date_watched": "June 2025",
+      "location": "Cineplex VIP Cinemas Brentwood",
+      "format": "VIP",
+      "rewatch": true
+    },
+    {
+      "movie_id": "final-destination-bloodlines",
+      "title": "Final Destinaion Bloodlines",
+      "movie_year": 2025,
+      "rating": 9.5,
+      "genres": [
+        "Horror",
+        "Mystery"
+      ],
+      "date_watched": "May 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "final-destination",
+      "title": "Final Destination",
+      "movie_year": 2000,
+      "rating": 8,
+      "genres": [
+        "Horror"
+      ],
+      "date_watched": "October 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "fnaf2",
+      "title": "Five Nights At Freddys 2",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Horror",
+        "Thriller"
+      ],
+      "date_watched": "December 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "good-fortune",
+      "title": "Good Fortune",
+      "movie_year": 2025,
+      "rating": 8,
+      "genres": [
+        "Comedy",
+        "Fantasy"
+      ],
+      "date_watched": "October 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "hoppers",
+      "title": "Hoppers",
+      "movie_year": 2026,
+      "rating": 8,
+      "genres": [
+        "Adventure",
+        "Animation",
+        "Comedy",
+        "Family",
+        "Science Fiction"
+      ],
+      "date_watched": "May 2026",
+      "location": "SilverCity RiverPort Cinemas",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "how-to-train-your-dragon",
+      "title": "How To Train Your Dragon",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Fantasy",
+        "Family",
+        "Action",
+        "Adventure"
+      ],
+      "date_watched": "June 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "inception",
+      "title": "Inception",
+      "movie_year": 2010,
+      "rating": 8,
+      "genres": [
+        "Action",
+        "Science Fiction",
+        "Adventure"
+      ],
+      "date_watched": "November 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "jaws",
+      "title": "Jaws",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Horror"
+      ],
+      "date_watched": "August 2025",
+      "location": "Cineplex Cinemas Langley",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "jurassic-world-rebirth",
+      "title": "Jurassic World Rebirth",
+      "movie_year": 2025,
+      "rating": 5.5,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+      ],
+      "date_watched": "June 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "la-la-land",
+      "title": "La La Land",
+      "movie_year": 2016,
+      "rating": 9,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "date_watched": "August 2026",
+      "location": "Cineplex Cinemas Langley",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "leviticus",
+      "title": "Leviticus",
+      "movie_year": 2026,
+      "rating": 8.5,
+      "genres": [
+        "Horror",
+        "Romance"
+      ],
+      "date_watched": "June 2026",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "m3gan-2",
+      "title": "M3GAN 2.0",
+      "movie_year": 2025,
+      "rating": 6.5,
+      "genres": [
+        "Action",
+        "Science Fiction",
+        "Thriller"
+      ],
+      "date_watched": "June 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "michael",
+      "title": "Michael",
+      "movie_year": 2025,
+      "rating": 8,
+      "genres": [
+        "Music",
+        "Drama"
+      ],
+      "date_watched": "April 2026",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "minions-the-rise-of-gru",
+      "title": "Minions The rise of Gru",
+      "movie_year": 2022,
+      "rating": 7.5,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Science Fiction",
+        "Crime",
+        "Family"
+      ],
+      "date_watched": "May 2025",
+      "location": "Cineplex Cinemas Park Royal and VIP",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "mission-impossible",
+      "title": "Mission Impossible The Final Reckoning",
+      "movie_year": 2025,
+      "rating": 6.5,
+      "genres": [
+        "Action",
+        "Thriller",
+        "Adventure"
+      ],
+      "date_watched": "May 2025",
+      "location": "Cineplex Cinemas Strawberry Hill",
+      "format": "AVX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "ne-zha-2",
+      "title": "Ne Zha 2",
+      "movie_year": 2025,
+      "rating": 5,
+      "genres": [
+        "Animation",
+        "Action",
+        "Fantasy"
+      ],
+      "date_watched": "August 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "nobody-2",
+      "title": "Nobody 2",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Action",
+        "Thriller",
+        "Crime"
+      ],
+      "date_watched": "August 2025",
+      "location": "Cineplex VIP Cinemas Brentwood",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "obsession",
+      "title": "Obsession",
+      "movie_year": 2026,
+      "rating": 10,
+      "genres": [
+        "Horror",
+        "Thriller"
+      ],
+      "date_watched": "July 2026",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Regular",
+      "rewatch": true
+    },
+    {
+      "movie_id": "obsession",
+      "title": "Obsession",
+      "movie_year": 2026,
+      "rating": 10,
+      "genres": [
+        "Horror",
+        "Thriller"
+      ],
+      "date_watched": "May 2026",
+      "location": "Cineplex Cinemas Strawberry Hill",
+      "format": "AVX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "one-battle-after-another",
+      "title": "One Battle After Another",
+      "movie_year": 2025,
+      "rating": 9.5,
+      "genres": [
+        "Thriller",
+        "Crime",
+        "Comedy"
+      ],
+      "date_watched": "September 2025",
+      "location": "The Park Theatre",
+      "format": "70 MM",
+      "rewatch": false
+    },
+    {
+      "movie_id": "project-hail-mary",
+      "title": "Project Hail Mary",
+      "movie_year": 2026,
+      "rating": 7.5,
+      "genres": [
+        "Science Fiction",
+        "Adventure"
+      ],
+      "date_watched": "April 2026",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "regretting-you",
+      "title": "Regretting You",
+      "movie_year": 2025,
+      "rating": 6,
+      "genres": [
+        "Romance",
+        "Drama"
+      ],
+      "date_watched": "October 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "relay",
+      "title": "Relay",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Action",
+        "Drama",
+        "Thriller"
+      ],
+      "date_watched": "August 2025",
+      "location": "Cineplex Cinemas Marine Gateway and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "rental-faily",
+      "title": "Rental Family",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "date_watched": "November 2025",
+      "location": "Cineplex Cinemas Park Royal and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "roofman",
+      "title": "Roofman",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Crime",
+        "Comedy",
+        "Drama"
+      ],
+      "date_watched": "October 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "scary-movie",
+      "title": "Scary Movie",
+      "movie_year": 2026,
+      "rating": 5.5,
+      "genres": [
+        "Comedy"
+      ],
+      "date_watched": "June 2026",
+      "location": "Cineplex Cinemas Strawberry Hill",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "sinners",
+      "title": "Sinners",
+      "movie_year": 2025,
+      "rating": 9.5,
+      "genres": [
+        "Horror",
+        "Action",
+        "Thriller"
+      ],
+      "date_watched": "May 2025",
+      "location": "Cineplex Cinemas Park Royal and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "sinners",
+      "title": "Sinners",
+      "movie_year": 2025,
+      "rating": 9.5,
+      "genres": [
+        "Horror",
+        "Action",
+        "Thriller"
+      ],
+      "date_watched": "November 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": true
+    },
+    {
+      "movie_id": "sketch",
+      "title": "Sketch",
+      "movie_year": 2025,
+      "rating": 6.5,
+      "genres": [
+        "Advenutre",
+        "Fantasy",
+        "Comedy",
+        "Family"
+      ],
+      "date_watched": "August 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "sorry-baby",
+      "title": "Sorry, Baby",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Drama",
+        "Comedy"
+      ],
+      "date_watched": "July 2025",
+      "location": "Cineplex Odeon International Village Cinemas",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "spiderman",
+      "title": "Spider-Man Brand New Day",
+      "movie_year": 2026,
+      "rating": 8,
+      "genres": [
+        "Science Fiction",
+        "Action",
+        "Adventure"
+      ],
+      "date_watched": "August 2026",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "supergirl",
+      "title": "Supergirl",
+      "movie_year": 2026,
+      "rating": 6,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Science Fiction"
+      ],
+      "date_watched": "June 2026",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "superman",
+      "title": "Superman",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+      ],
+      "date_watched": "July 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-bad-guys-2",
+      "title": "The Bad Guys 2",
+      "movie_year": 2025,
+      "rating": 8,
+      "genres": [
+        "Family",
+        "Comedy",
+        "Crime",
+        "Adventure",
+        "Animation",
+        "Action"
+      ],
+      "date_watched": "August 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Screen X",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-conjuring-last-rites",
+      "title": "The Conjuring Last Rites",
+      "movie_year": 2025,
+      "rating": 6.5,
+      "genres": [
+        "Horror"
+      ],
+      "date_watched": "September 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "fantastic-4",
+      "title": "The Fantastic 4 First Steps",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+      ],
+      "date_watched": "August 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-godfather",
+      "title": "The Godfather",
+      "movie_year": 1972,
+      "rating": 9,
+      "genres": [
+        "Drama",
+        "Crime"
+      ],
+      "date_watched": "July 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-life-of-chuck",
+      "title": "The Life of Chuck",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Fantasy",
+        "Drama"
+      ],
+      "date_watched": "June 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-long-walk",
+      "title": "The Long Walk",
+      "movie_year": 2025,
+      "rating": 7,
+      "genres": [
+        "Science Fiction",
+        "Thriller",
+        "Horror"
+      ],
+      "date_watched": "September 2025",
+      "location": "Cineplex Cinemas Park Royal and VIP",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-naked-gun",
+      "title": "The Naked Gun",
+      "movie_year": 2025,
+      "rating": 8.5,
+      "genres": [
+        "Comedy",
+        "Crime",
+        "Action"
+      ],
+      "date_watched": "August 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-odyssey",
+      "title": "The Odyssey",
+      "movie_year": 2026,
+      "rating": 8.5,
+      "genres": [
+        "Adventure",
+        "Action",
+        "Fantasy"
+      ],
+      "date_watched": "July 2026",
+      "location": "Cineplex Cinemas Langley",
+      "format": "IMAX 70MM",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-phoenician-scheme",
+      "title": "The Phoenician Scheme",
+      "movie_year": 2025,
+      "rating": 8,
+      "genres": [
+        "Comedy",
+        "Adventure",
+        "Crime"
+      ],
+      "date_watched": "June 2025",
+      "location": "Cineplex Cinemas Park Royal and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-roses",
+      "title": "The Roses",
+      "movie_year": 2025,
+      "rating": 8,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "date_watched": "August 2025",
+      "location": "Cineplex Cinemas Marine Gateway and VIP",
+      "format": "VIP",
+      "rewatch": false
+    },
+    {
+      "movie_id": "the-shining",
+      "title": "The Shining",
+      "movie_year": 1980,
+      "rating": 8.5,
+      "genres": [
+        "Horror",
+        "Thriller"
+      ],
+      "date_watched": "December 2025",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "thunderbolts",
+      "title": "Thunderbolts*",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Action",
+        "Science Fiction",
+        "Adventure"
+      ],
+      "date_watched": "May 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Screen X",
+      "rewatch": false
+    },
+    {
+      "movie_id": "toy-story",
+      "title": "Toy Story",
+      "movie_year": 1995,
+      "rating": 9,
+      "genres": [
+        "Family",
+        "Comedy",
+        "Animation",
+        "Adventure"
+      ],
+      "date_watched": "September 2025",
+      "location": "Landmark Cinemas New Westminster",
+      "format": "Premiere",
+      "rewatch": false
+    },
+    {
+      "movie_id": "toy-story-5",
+      "title": "Toy Story 5",
+      "movie_year": 2026,
+      "rating": 8,
+      "genres": [
+        "Animation",
+        "Family",
+        "Comedy",
+        "Adventure"
+      ],
+      "date_watched": "June 2026",
+      "location": "Scotiabank Theatre Vancouver",
+      "format": "IMAX",
+      "rewatch": false
+    },
+    {
+      "movie_id": "tron-ares",
+      "title": "Tron Ares",
+      "movie_year": 2025,
+      "rating": 5,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+      ],
+      "date_watched": "October 2025",
+      "location": "Landmark Cinemas Surrey Guildford",
+      "format": "Screen X",
+      "rewatch": false
+    },
+    {
+      "movie_id": "weapons",
+      "title": "Weapons",
+      "movie_year": 2025,
+      "rating": 9,
+      "genres": [
+        "Horry",
+        "Mystery"
+      ],
+      "date_watched": "August 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "Screen X",
+      "rewatch": false
+    },
+    {
+      "movie_id": "your-name",
+      "title": "Your Name.",
+      "movie_year": 2016,
+      "rating": 8.5,
+      "genres": [
+        "Animation",
+        "Romance",
+        "Drama"
+      ],
+      "date_watched": "August 2026",
+      "location": "Cineplex Cinemas Langley",
+      "format": "Regular",
+      "rewatch": false
+    },
+    {
+      "movie_id": "zootopia-2",
+      "title": "Zootopia 2",
+      "movie_year": 2025,
+      "rating": 7.5,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy",
+        "Mystery",
+        "Family"
+      ],
+      "date_watched": "December 2025",
+      "location": "Cineplex Cinemas Coquitlam and VIP",
+      "format": "IMAX",
+      "rewatch": false
+    }
+  ]
 }
