@@ -1,0 +1,112 @@
+version: 1
+# Add cases authored from your own knowledge of the source data. IDs must match
+# documents in the index produced by `python src/rag.py build`.
+cases:
+  - id: extraction-sinners-favorite-character
+    type: extraction
+    question: Who was my favorite character in Sinners?
+    relevant_document_ids: [sinners:favorite-character:1]
+    expected_answer: Sammie
+    automated_retrieval: true
+    generation_review: manual
+    notes: A focused fact lookup. Check whether the answer names Sammie and cites the retrieved note.
+
+  - id: extraction-odyssey-favorite-scene
+    type: extraction
+    question: What was my favorite scene in The Odyssey?
+    relevant_document_ids: [the-odyssey:favorite-scene:1]
+    expected_answer: The bow sequence when Odysseus returned.
+    automated_retrieval: true
+    generation_review: manual
+    notes: Add a case only after confirming the document ID in documents.jsonl.
+
+  - id: extraction-songs-final-destination-notes
+    type: extraction
+    question: What was my favorite scene in The Odyssey?
+    relevant_document_ids: [final-destination-bloodlines:notes:1]
+    expected_answer: Without You, Fallin, Raindrops keep falling on my head
+    automated_retrieval: true
+    generation_review: manual
+    notes: 
+
+  - id: extraction-the-minecraft-movie-notes
+    type: extraction
+    question: How did my movie phase start?
+    relevant_document_ids: [a-minecraft-movie:notes:1]
+    expected_answer: It started with me being excited to see my childhood game turned into a movie...
+    automated_retrieval: true
+    generation_review: manual
+    notes: 
+
+  - id: extraction-obsession-notes
+    type: extraction
+    question: Who is Nikki?
+    relevant_document_ids: [obsession:notes:1, obsession:favorite-character:1, obsession:favorite-scene:1, obsession:details-facts-or-theories:1]
+    expected_answer: Nikki is a character from Obsession
+    automated_retrieval: true
+    generation_review: manual
+    notes: 
+
+  - id: comparison-imax-experiences
+    type: compare
+    question: Compare how I described the IMAX experiences for Sinners and The Odyssey.
+    relevant_document_ids: [sinners:notes:1, the-odyssey:notes:1]
+    automated_retrieval: true
+    generation_review: manual
+    notes: 
+
+  - id: comparison-story
+    type: compare
+    question: How did you enjoy the story development for Cars and Toy Story?
+    relevant_document_ids: [cars:notes:1, toy-story:notes:1]
+    automated_retrieval: true
+    generation_review: manual
+    notes: Evaluate whether unrelated details are brought up
+
+  - id: filter-imax-metadata
+    type: filter
+    question: Which movies in my collection have an IMAX viewing?
+    relevant_document_ids: []
+    automated_retrieval: false
+    generation_review: manual
+    notes: Add every matching metadata document after defining whether IMAX variants count. Prefer a deterministic structured-data query for the final answer.
+
+  - id: filter-location-langleys-movies
+    type: filter
+    question: Which movies did I watch at Cineplex Cinemas Langley?
+    relevant_document_ids: []
+    automated_retrieval: false
+    generation_review: manual
+    notes: This needs a complete result set, so assess it against structured data rather than a top-k RAG result.
+
+  - id: rank-highest-rated
+    type: rank
+    question: Which movies did I rate highest, in descending order?
+    relevant_document_ids: []
+    automated_retrieval: false
+    generation_review: manual
+    notes: Ranking and ties should be evaluated with a deterministic structured-data query, not LLM prose.
+
+  - id: rank-most-immersive-notes
+    type: rank
+    question: Which notes most strongly describe an immersive viewing experience?
+    relevant_document_ids: [sinners:notes:1, the-odyssey:notes:1]
+    automated_retrieval: true
+    generation_review: manual
+    notes: The target ranking is subjective; score only whether relevant evidence appears in the top-k automatically.
+
+  - id: combined-imax-and-immersion
+    type: combine
+    question: Which IMAX viewing did I describe as especially immersive, and why?
+    relevant_document_ids: [sinners:metadata, sinners:notes:1, the-odyssey:metadata, the-odyssey:notes:1]
+    automated_retrieval: true
+    generation_review: manual
+    notes: Requires joining factual viewing metadata with subjective notes. Grade the final answer for grounding and completeness.
+
+  - id: combined-favorite-character-and-reaction
+    type: combine
+    question: Who was my favorite character in The Phoenician Scheme, and why did I like the character?
+    relevant_document_ids: [the-phoenician-scheme:notes:1, the-phoenician-scheme:favorite-character:1]
+    automated_retrieval: true
+    generation_review: manual
+    notes: Tests multi-chunk retrieval followed by grounded synthesis.

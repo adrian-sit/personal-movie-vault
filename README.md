@@ -255,6 +255,13 @@ The response includes numbered citations and the matched local files. The
 derived `documents.jsonl` and vector index are intentionally ignored by Git;
 the original YAML and Markdown remain the source of truth.
 
+## Evaluation
+
+Author-curated retrieval cases and a comparison runner live in
+[`eval/`](eval/README.md). They support consistent evaluation of semantic,
+BM25, and hybrid retrieval across multiple embedding indexes, while keeping
+subjective answer quality as a separate manual review.
+
 ## Privacy & Copyright
 
 This project is designed as a local-first system.
