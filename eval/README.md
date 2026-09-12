@@ -45,22 +45,47 @@ small author-reviewed set of varied phrasings rather than one fixed template.
 
 ## Running comparisons
 
-First build each embedding index you want to compare. Keep the same source data,
-semantic chunk model, cases, and `--top-k` value across runs.
+### 1. Build the indexes
+
+First generate the shared source-derived files, then build one named index per
+document-embedding model. Keep the same raw data, `--chunk-model`, cases, and
+`--top-k` value across runs. The chunk model must be fixed because it determines
+the document IDs that `cases.yaml` labels.
 
 ```powershell
-# Baseline vector retrieval
-python eval\run_retrieval_eval.py --retrieval semantic --top-k 5 --output eval\results\semantic-nomic.json
+python src\yaml_to_json.py
 
-# Lexical baseline; does not need an embedding call at query time
-python eval\run_retrieval_eval.py --retrieval bm25 --top-k 5 --output eval\results\bm25.json
+ollama pull nomic-embed-text
+python src\rag.py build --embed-model nomic-embed-text --chunk-model nomic-embed-text --index data\processed\rag_index_nomic.json
 
-# Hybrid retrieval
-python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --top-k 5 --output eval\results\hybrid-50.json
-
-# Compare a second document-embedding index built earlier
-python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_mxbai.json --top-k 5 --output eval\results\semantic-mxbai.json
+ollama pull mxbai-embed-large
+python src\rag.py build --embed-model mxbai-embed-large --chunk-model nomic-embed-text --index data\processed\rag_index_mxbai.json
 ```
+
+Use a new descriptive `--index` filename for every model. Do not build each
+experiment to `rag_index.json`, because that replaces the prior index. A change
+to raw data or the chunk model requires rebuilding every compared index and
+checking the case document IDs again.
+
+### 2. Run retrieval comparisons
+
+```powershell
+# Semantic retrieval: compare the two embedding indexes with identical settings.
+python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_nomic.json --top-k 5 --output eval\results\semantic-nomic.json
+python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_mxbai.json --top-k 5 --output eval\results\semantic-mxbai.json
+
+# Lexical BM25 is model-independent, so run it once as a baseline.
+python eval\run_retrieval_eval.py --retrieval bm25 --index data\processed\rag_index_nomic.json --top-k 5 --output eval\results\bm25.json
+
+# Hybrid retrieval: pair the same BM25 baseline with each embedding index.
+python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --index data\processed\rag_index_nomic.json --top-k 5 --output eval\results\hybrid-nomic-50.json
+python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --index data\processed\rag_index_mxbai.json --top-k 5 --output eval\results\hybrid-mxbai-50.json
+```
+
+Compare `mean_recall_at_k` and `mean_reciprocal_rank` between result files.
+Only change one variable per comparison: embedding model, retrieval method, or
+hybrid weight. For example, test hybrid weights `0.25`, `0.5`, and `0.75`
+against the same index rather than changing the model and weight together.
 
 The runner reports:
 

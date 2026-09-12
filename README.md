@@ -197,6 +197,42 @@ To compare embedding models without overwriting a prior index, build named
 indexes. For example, `nomic-embed-text` is a compact baseline; an alternative
 such as `mxbai-embed-large` may improve retrieval but uses more resources.
 
+### Building comparable embedding indexes
+
+An index is tied to the model named by `--embed-model`. Give every experiment a
+different `--index` path; otherwise the default `rag_index.json` is replaced.
+For a fair embedding comparison, keep the raw data, statistics file, chunk
+model, test cases, retrieval method, and `--top-k` constant. In particular,
+keep `--chunk-model nomic-embed-text` unchanged: changing it changes the
+document boundaries and makes the experiment a chunking comparison instead.
+
+```powershell
+# 1. Recreate the shared structured data and statistics corpus once.
+python src\yaml_to_json.py
+
+# 2. Download each document-embedding model once.
+ollama pull nomic-embed-text
+ollama pull mxbai-embed-large
+
+# 3. Build a named baseline index.
+python src\rag.py build --embed-model nomic-embed-text --chunk-model nomic-embed-text --index data\processed\rag_index_nomic.json
+
+# 4. Build the comparison index using the same chunks but different document embeddings.
+python src\rag.py build --embed-model mxbai-embed-large --chunk-model nomic-embed-text --index data\processed\rag_index_mxbai.json
+```
+
+The build command embeds every document into the selected index. It does not
+delete another named index. `documents.jsonl` is regenerated as an inspectable
+copy of the shared corpus; because the chunk model is fixed, its document IDs
+should be identical for both indexes.
+
+Query a particular index explicitly:
+
+```powershell
+python src\rag.py ask "Why did I find The Odyssey immersive?" --index data\processed\rag_index_nomic.json
+python src\rag.py ask "Why did I find The Odyssey immersive?" --index data\processed\rag_index_mxbai.json
+```
+
 ## Setup
 
 This project uses [Ollama](https://ollama.com/) so both the embeddings and the
