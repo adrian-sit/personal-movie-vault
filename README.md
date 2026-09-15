@@ -305,10 +305,33 @@ the original YAML and Markdown remain the source of truth.
 
 ## Evaluation
 
-Author-curated retrieval cases and a comparison runner live in
-[`eval/`](eval/README.md). They support consistent evaluation of semantic,
-BM25, and hybrid retrieval across multiple embedding indexes, while keeping
-subjective answer quality as a separate manual review.
+The project evaluates retrieval with author-labeled document relevance
+(Recall@k and MRR) and evaluates generated answers with a separate 0–10 manual
+review. The full workflow, case schema, index-building commands, and review
+rubric are in [the evaluation guide](eval/README.md). Author-curated questions
+are stored in [cases.yaml](eval/cases.yaml), and the detailed findings are in
+[the evaluation report](eval/RESULTS.md).
+
+### Current results
+
+This snapshot covers five reviewed runs at `top_k: 5`:
+
+| Method / index | Recall@5 | MRR | Manual average (/10) |
+|---|---:|---:|---:|
+| semantic / mxbai | **0.800** | **0.758** | **8.60** |
+| hybrid / nomic (0.5) | 0.675 | 0.670 | 8.35 |
+| semantic / nomic | 0.750 | 0.633 | 7.70 |
+| hybrid / mxbai (0.5) | 0.625 | 0.695 | 7.65 |
+| BM25 / nomic corpus | 0.475 | 0.500 | 5.70 |
+
+Semantic retrieval with the mxbai index currently performs best overall.
+Extraction cases are the most reliable, while comparison and multi-chunk
+combination questions remain the main weaknesses. Regenerate the detailed
+report after editing results with:
+
+```powershell
+python eval\summarize_results.py
+```
 
 ## Privacy & Copyright
 
