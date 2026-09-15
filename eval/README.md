@@ -27,21 +27,46 @@ interpretive judgment that cannot be represented by a finite relevant set.
 The runner stops before scoring if a marked document ID is absent from the
 selected index, preventing stale chunks from producing misleading metrics.
 
-## Test categories
+## What the evaluation measures
 
-| Type | Purpose | What to score automatically | What to review manually |
-|---|---|---|---|
-| `extraction` | Find one explicit fact in a note | Retrieval of the known source chunk; optionally exact deterministic extraction | Whether the generated wording is faithful and cited |
-| `compare` | Bring evidence for two or more movies together | Recall of every marked evidence chunk | Balance, completeness, and whether the comparison invents a conclusion |
-| `filter` | Return every record matching a condition | Only if you define the complete matching metadata-ID set | Completeness and interpretation of terms such as “IMAX” |
-| `rank` | Order records by a value or subjective criterion | Retrieval presence for subjective evidence only | Ordering, ties, and subjective ranking rationale |
-| `combine` | Join metadata with notes, or synthesize several facts | Recall across the required chunks | Multi-hop reasoning, citations, and answer completeness |
+Use `type` to organize cases (`extraction`, `compare`, `filter`, `rank`, or
+`combine`). The scoring itself has two deliberately separate parts.
+
+### Automatic retrieval metrics
+
+Automatic evaluation answers one question: **did the retriever return the
+author-labeled documents, and did it place them near the top?**
+
+- **Recall@k**: what fraction of the marked relevant documents appear in the
+  first *k* results.
+- **MRR**: how early the first relevant document appears.
+
+Only add `relevant_document_ids` when you can name the relevant chunks. Leave
+them empty for a complete filter, tie-sensitive ranking, or open-ended opinion;
+those cases still generate an answer but do not affect automatic averages.
+
+### Manual answer review
+
+Review `generated_answer` after each run and record a 0–10 score plus one short
+note in the result JSON. Your current review style maps naturally to this
+rubric:
+
+| Score | Meaning |
+|---:|---|
+| 10 | Correct or good answer; it answers the question from the relevant evidence. |
+| 7–9 | Core answer is correct, with a minor inaccurate, irrelevant, or missing detail. |
+| 3–6 | Some useful evidence or a partial answer, but a major omission, error, or off-topic result remains. |
+| 1–2 | Relevant material was retrieved, but the answer substantially fails the question. |
+| 0 | No answer or a wrong answer. |
+
+Use the note to identify the failure plainly—for example: “No answer,” “did not
+retrieve the Sinners note,” or “included an unrelated movie.” This is more
+useful than a generic quality label when reading the report later.
 
 For exact count, filter, and metadata-ranking questions, prefer the structured
 analytics layer over RAG. They are not top-*k* retrieval tests: the chat model
 interprets natural-language questions against deterministic statistics. Evaluate
-them separately for correct record selection and presentation, ideally with a
-small author-reviewed set of varied phrasings rather than one fixed template.
+them separately for correct record selection and presentation.
 
 ## Running comparisons
 
@@ -87,6 +112,47 @@ Only change one variable per comparison: embedding model, retrieval method, or
 hybrid weight. For example, test hybrid weights `0.25`, `0.5`, and `0.75`
 against the same index rather than changing the model and weight together.
 
+### 3. Add manual reviews
+
+Every retrieval-evaluation run generates an answer by default, so the same JSON
+result includes retrieval metrics and the actual local-model response. Each case
+also includes its retrieved source IDs, expected answer (where defined), case
+notes, and empty `manual_review` fields. This makes a run slower because it
+calls the chat model once per automatically scored case.
+
+```powershell
+python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_nomic.json --top-k 5 --include-manual-cases --chat-model qwen2.5:3b --output eval\results\semantic-nomic-with-answers.json
+```
+
+Open the resulting JSON and score each `generated_answer` using the nearby
+`retrieved_sources`, `expected_answer`, and `case_notes`. The supplied
+`manual_review.score` and `manual_review.notes` fields are blank deliberately:
+replace them after reading the answer:
+
+```json
+"manual_review": {
+  "score": 8,
+  "notes": "Correct answer, but included an unrelated format detail."
+}
+```
+
+Do not change the retrieval fields or generated answer after the run; add only
+your manual review. Save the edited JSON in `eval/results/`.
+Cases without relevance labels appear when `--include-manual-cases` is set, but
+their retrieval metrics are `null` and they do not affect the aggregate scores.
+For a fast retrieval-only run, add `--no-generate-answers`.
+
+### 4. Create the report
+
+After reviewing one or more result files, run:
+
+```powershell
+python eval\summarize_results.py
+```
+
+It writes [RESULTS.md](RESULTS.md), containing method-level automatic/manual
+averages, pooled test-type patterns, and every review below 8/10 with its note.
+
 The runner reports:
 
 - `mean_recall_at_k`: fraction of each case's author-marked relevant chunks
@@ -94,7 +160,24 @@ The runner reports:
 - `mean_reciprocal_rank` (MRR): rewards placing the first relevant chunk early.
 - Per-case retrieved and missing IDs, which make failures inspectable.
 
-The runner deliberately does not score generated prose. After selecting a
-retrieval configuration, use the `expected_answer` and `notes` fields as a
-small manual rubric for factual grounding, citation quality, completeness, and
-whether an interpretation matches your intent.
+Current findings from the saved runs are summarized in [RESULTS.md](RESULTS.md).
+
+## Current results snapshot
+
+The following summary is based on the five reviewed `top_k: 5` runs currently
+saved in `eval/results/`. Full per-type findings and review notes are in
+[RESULTS.md](RESULTS.md).
+
+| Method / index | Recall@5 | MRR | Manual average (/10) |
+|---|---:|---:|---:|
+| semantic / mxbai | **0.800** | **0.758** | **8.60** |
+| semantic / nomic | 0.750 | 0.633 | 7.70 |
+| hybrid / nomic (0.5) | 0.675 | 0.670 | 8.35 |
+| hybrid / mxbai (0.5) | 0.625 | 0.695 | 7.65 |
+| BM25 / nomic corpus | 0.475 | 0.500 | 5.70 |
+
+Semantic retrieval with the mxbai index is the strongest overall configuration
+in this snapshot. Extraction is the most reliable test type; comparison and
+multi-chunk combination cases remain the main retrieval weaknesses. BM25 is a
+useful exact-term baseline, but it is not the preferred main method for these
+notes.

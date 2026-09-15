@@ -4,7 +4,7 @@ title: Obsession
 ---
 
 ## Notes
-In my first watch, I was stressed for the entirety of the movie as I'm really worried about what Nikki may do next, I left the movie theatre feeling really stressed, and I kept thinking about what would I do if I were Bear in this situation. After watching online reviews, on my second watch, I start to focus on noticing how horrible of a person Bear is.
+Movies with a good story, and great cinematic elements, are one of my favorite types of movies. Obsession mixed horror, relationship drama and comedy and created a piece of work that fits my preferences really well. In my first watch, I was stressed for the entirety of the movie as I'm really worried about what Nikki may do next, I left the movie theatre feeling really stressed, and I kept thinking about what would I do if I were Bear in this situation. After watching online reviews, on my second watch, I start to focus on noticing how horrible of a person Bear is.
 
 ## Favorite Character
 Freaky Nikki

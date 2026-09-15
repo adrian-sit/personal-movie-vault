@@ -22,7 +22,7 @@ cases:
 
   - id: extraction-songs-final-destination-notes
     type: extraction
-    question: What was my favorite scene in The Odyssey?
+    question: What are the songs mentioned in Final Destination Bloodlines?
     relevant_document_ids: [final-destination-bloodlines:notes:1]
     expected_answer: Without You, Fallin, Raindrops keep falling on my head
     automated_retrieval: true
@@ -57,7 +57,7 @@ cases:
 
   - id: comparison-story
     type: compare
-    question: How did you enjoy the story development for Cars and Toy Story?
+    question: How did I enjoy the story development for Cars and Toy Story?
     relevant_document_ids: [cars:notes:1, toy-story:notes:1]
     automated_retrieval: true
     generation_review: manual
@@ -101,12 +101,12 @@ cases:
     relevant_document_ids: [sinners:metadata, sinners:notes:1, the-odyssey:metadata, the-odyssey:notes:1]
     automated_retrieval: true
     generation_review: manual
-    notes: Requires joining factual viewing metadata with subjective notes. Grade the final answer for grounding and completeness.
+    notes: Requires joining factual viewing metadata with subjective notes. 
 
-  - id: combined-favorite-character-and-reaction
+  - id: combined-better-animation
     type: combine
-    question: Who was my favorite character in The Phoenician Scheme, and why did I like the character?
-    relevant_document_ids: [the-phoenician-scheme:notes:1, the-phoenician-scheme:favorite-character:1]
+    question: Which 2 animation movies do I like the most and why?
+    relevant_document_ids: ["toy-story:metadata", "your-name:metadata", "toy-story:notes:1", "your-name:notes:1"]
     automated_retrieval: true
     generation_review: manual
-    notes: Tests multi-chunk retrieval followed by grounded synthesis.
+    notes: 

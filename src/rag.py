@@ -359,8 +359,8 @@ def search(question: str, top_k: int, retrieval: str, hybrid_weight: float, path
     return ranked[:top_k]
 
 
-def ask(args: argparse.Namespace) -> None:
-    results = search(args.question, args.top_k, args.retrieval, args.hybrid_weight, index_path(args.index))
+def answer_from_results(question: str, results: list[dict[str, Any]], chat_model: str) -> str:
+    """Generate an answer from supplied retrieval results; reused by evaluators."""
     context = "\n\n".join(
         f"[{i}] {item['title']} — {item['section']} ({item['source']})\n{item['text']}"
         for i, item in enumerate(results, 1)
@@ -375,9 +375,14 @@ def ask(args: argparse.Namespace) -> None:
         "in that entry's `Movies:` list, not one example. Respect exact labels: "
         "`IMAX` and `IMAX 70MM` are distinct formats unless the question explicitly "
         "asks to combine them. Cite each claim with [1], [2], etc.\n\n"
-        f"Context:\n{context}\n\nQuestion: {args.question}\nAnswer:"
+        f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
     )
-    answer = ollama("/api/generate", {"model": args.chat_model, "prompt": prompt, "stream": False})["response"].strip()
+    return ollama("/api/generate", {"model": chat_model, "prompt": prompt, "stream": False})["response"].strip()
+
+
+def ask(args: argparse.Namespace) -> None:
+    results = search(args.question, args.top_k, args.retrieval, args.hybrid_weight, index_path(args.index))
+    answer = answer_from_results(args.question, results, args.chat_model)
     print(answer)
     print(f"\nSources ({args.retrieval} retrieval):")
     for i, item in enumerate(results, 1):

@@ -29,16 +29,26 @@ def evaluate_case(case: dict, args: argparse.Namespace) -> dict:
     retrieved_ids = [result["id"] for result in results]
     relevant_ids = set(case["relevant_document_ids"])
     found_ids = relevant_ids & set(retrieved_ids)
-    return {
+    report = {
         "id": case["id"],
         "type": case["type"],
         "question": case["question"],
         "relevant_document_ids": sorted(relevant_ids),
         "retrieved_document_ids": retrieved_ids,
-        "recall_at_k": len(found_ids) / len(relevant_ids),
-        "reciprocal_rank": reciprocal_rank(retrieved_ids, relevant_ids),
+        "recall_at_k": len(found_ids) / len(relevant_ids) if relevant_ids else None,
+        "reciprocal_rank": reciprocal_rank(retrieved_ids, relevant_ids) if relevant_ids else None,
         "missing_relevant_ids": sorted(relevant_ids - found_ids),
     }
+    if args.generate_answers:
+        report["expected_answer"] = case.get("expected_answer")
+        report["case_notes"] = case.get("notes", "")
+        report["generated_answer"] = rag.answer_from_results(case["question"], results, args.chat_model)
+        report["retrieved_sources"] = [
+            {"id": result["id"], "source": result["source"], "section": result["section"]}
+            for result in results
+        ]
+        report["manual_review"] = {"score": None, "notes": ""}
+    return report
 
 
 def main() -> None:
@@ -48,7 +58,14 @@ def main() -> None:
     parser.add_argument("--retrieval", choices=("semantic", "bm25", "hybrid"), default="semantic")
     parser.add_argument("--hybrid-weight", type=float, default=0.5)
     parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--no-generate-answers", dest="generate_answers", action="store_false",
+                        help="Skip answer generation and run retrieval metrics only")
+    parser.add_argument("--include-manual-cases", action="store_true",
+                        help="Also generate answers for cases without automatic relevance labels")
+    parser.add_argument("--chat-model", default="qwen2.5:3b",
+                        help="Local Ollama model used to generate answers (unless disabled)")
     parser.add_argument("--output", help="Optional JSON result path, relative to the project root")
+    parser.set_defaults(generate_answers=True)
     args = parser.parse_args()
     if not 0 <= args.hybrid_weight <= 1:
         parser.error("--hybrid-weight must be between 0 and 1")
@@ -59,13 +76,14 @@ def main() -> None:
         case for case in data["cases"]
         if case.get("automated_retrieval") and case.get("relevant_document_ids")
     ]
+    selected_cases = data["cases"] if args.include_manual_cases else automated_cases
     index_path = rag.index_path(args.index)
     if not index_path.exists():
         parser.error(f"Index not found: {index_path}. Build it with `python src/rag.py build` first.")
     known_ids = {document["id"] for document in json.loads(index_path.read_text(encoding="utf-8"))["documents"]}
     unknown_ids = sorted({
         document_id
-        for case in automated_cases
+        for case in selected_cases
         for document_id in case["relevant_document_ids"]
         if document_id not in known_ids
     })
@@ -74,14 +92,16 @@ def main() -> None:
             "Case document IDs are not in this index. Rebuild the index or update cases.yaml: "
             + ", ".join(unknown_ids)
         )
-    evaluations = [evaluate_case(case, args) for case in automated_cases]
+    evaluations = [evaluate_case(case, args) for case in selected_cases]
+    scored_evaluations = [item for item in evaluations if item["recall_at_k"] is not None]
     summary = {
         "retrieval": args.retrieval,
         "index": args.index,
         "top_k": args.top_k,
         "case_count": len(evaluations),
-        "mean_recall_at_k": mean(item["recall_at_k"] for item in evaluations) if evaluations else 0.0,
-        "mean_reciprocal_rank": mean(item["reciprocal_rank"] for item in evaluations) if evaluations else 0.0,
+        "automatically_scored_case_count": len(scored_evaluations),
+        "mean_recall_at_k": mean(item["recall_at_k"] for item in scored_evaluations) if scored_evaluations else 0.0,
+        "mean_reciprocal_rank": mean(item["reciprocal_rank"] for item in scored_evaluations) if scored_evaluations else 0.0,
     }
     report = {"summary": summary, "cases": evaluations}
     print(json.dumps(report, indent=2))
