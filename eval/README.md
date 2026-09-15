@@ -92,19 +92,31 @@ experiment to `rag_index.json`, because that replaces the prior index. A change
 to raw data or the chunk model requires rebuilding every compared index and
 checking the case document IDs again.
 
-### 2. Run retrieval comparisons
+### 2. Run review-ready retrieval comparisons
+
+The commands below are the standard comparison workflow. Each one writes a
+single JSON file containing **all** cases:
+
+- labeled cases, which receive automatic Recall@5 and MRR scores; and
+- manual-only cases, such as complete filters and rating rankings, which have
+  `null` retrieval metrics but still include retrieved sources, a generated
+  answer, and blank `manual_review` fields.
+
+`--include-manual-cases` is therefore required for every reviewed comparison.
+Answer generation is on by default. Use a new output filename if you want to
+preserve an earlier reviewed run rather than replace it.
 
 ```powershell
 # Semantic retrieval: compare the two embedding indexes with identical settings.
-python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_nomic.json --top-k 5 --output eval\results\semantic-nomic.json
-python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_mxbai.json --top-k 5 --output eval\results\semantic-mxbai.json
+python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_nomic.json --top-k 5 --include-manual-cases --output eval\results\semantic-nomic-reviewed.json
+python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_mxbai.json --top-k 5 --include-manual-cases --output eval\results\semantic-mxbai-reviewed.json
 
 # Lexical BM25 is model-independent, so run it once as a baseline.
-python eval\run_retrieval_eval.py --retrieval bm25 --index data\processed\rag_index_nomic.json --top-k 5 --output eval\results\bm25.json
+python eval\run_retrieval_eval.py --retrieval bm25 --index data\processed\rag_index_nomic.json --top-k 5 --include-manual-cases --output eval\results\bm25-reviewed.json
 
 # Hybrid retrieval: pair the same BM25 baseline with each embedding index.
-python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --index data\processed\rag_index_nomic.json --top-k 5 --output eval\results\hybrid-nomic-50.json
-python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --index data\processed\rag_index_mxbai.json --top-k 5 --output eval\results\hybrid-mxbai-50.json
+python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --index data\processed\rag_index_nomic.json --top-k 5 --include-manual-cases --output eval\results\hybrid-nomic-50-reviewed.json
+python eval\run_retrieval_eval.py --retrieval hybrid --hybrid-weight 0.5 --index data\processed\rag_index_mxbai.json --top-k 5 --include-manual-cases --output eval\results\hybrid-mxbai-50-reviewed.json
 ```
 
 Compare `mean_recall_at_k` and `mean_reciprocal_rank` between result files.
@@ -112,22 +124,12 @@ Only change one variable per comparison: embedding model, retrieval method, or
 hybrid weight. For example, test hybrid weights `0.25`, `0.5`, and `0.75`
 against the same index rather than changing the model and weight together.
 
-### 3. Add manual reviews
+### 3. Review every generated answer
 
-Every retrieval-evaluation run generates an answer by default, so the same JSON
-result includes retrieval metrics and the actual local-model response. Each case
-also includes its retrieved source IDs, expected answer (where defined), case
-notes, and empty `manual_review` fields. This makes a run slower because it
-calls the chat model once per automatically scored case.
-
-```powershell
-python eval\run_retrieval_eval.py --retrieval semantic --index data\processed\rag_index_nomic.json --top-k 5 --include-manual-cases --chat-model qwen2.5:3b --output eval\results\semantic-nomic-with-answers.json
-```
-
-Open the resulting JSON and score each `generated_answer` using the nearby
-`retrieved_sources`, `expected_answer`, and `case_notes`. The supplied
-`manual_review.score` and `manual_review.notes` fields are blank deliberately:
-replace them after reading the answer:
+For each `*-reviewed.json` file, review every `generated_answer` using its
+nearby `retrieved_sources`, `expected_answer` (when supplied), and `case_notes`.
+The runner leaves these two fields blank deliberately; fill them in without
+changing the retrieval fields or generated answer:
 
 ```json
 "manual_review": {
@@ -136,15 +138,19 @@ replace them after reading the answer:
 }
 ```
 
-Do not change the retrieval fields or generated answer after the run; add only
-your manual review. Save the edited JSON in `eval/results/`.
-Cases without relevance labels appear when `--include-manual-cases` is set, but
-their retrieval metrics are `null` and they do not affect the aggregate scores.
-For a fast retrieval-only run, add `--no-generate-answers`.
+For example, assess `rank-highest-rated` by whether the response selects the
+right movies, puts rating groups in descending order, and handles ties clearly.
+It has `recall_at_k: null` and `reciprocal_rank: null` by design, but its manual
+score contributes to the method's overall manual average and the `rank`
+type-level manual average in the final report.
+
+For a fast, automatic-retrieval-only experiment, omit `--include-manual-cases`
+and add `--no-generate-answers`; do not mix those output files with reviewed
+comparison files when interpreting manual averages.
 
 ### 4. Create the report
 
-After reviewing one or more result files, run:
+After adding manual reviews to every comparison JSON, run:
 
 ```powershell
 python eval\summarize_results.py
@@ -152,6 +158,8 @@ python eval\summarize_results.py
 
 It writes [RESULTS.md](RESULTS.md), containing method-level automatic/manual
 averages, pooled test-type patterns, and every review below 8/10 with its note.
+It uses the manual score from all reviewed cases, including manual-only cases,
+while Recall@k and MRR use only the labeled cases.
 
 The runner reports:
 
