@@ -48,8 +48,7 @@ those cases still generate an answer but do not affect automatic averages.
 ### Manual answer review
 
 Review `generated_answer` after each run and record a 0–10 score plus one short
-note in the result JSON. Your current review style maps naturally to this
-rubric:
+note in the result JSON. The review follows the rubric:
 
 | Score | Meaning |
 |---:|---|
@@ -59,9 +58,7 @@ rubric:
 | 1–2 | Relevant material was retrieved, but the answer substantially fails the question. |
 | 0 | No answer or a wrong answer. |
 
-Use the note to identify the failure plainly—for example: “No answer,” “did not
-retrieve the Sinners note,” or “included an unrelated movie.” This is more
-useful than a generic quality label when reading the report later.
+
 
 For exact count, filter, and metadata-ranking questions, prefer the structured
 analytics layer over RAG. They are not top-*k* retrieval tests: the chat model
