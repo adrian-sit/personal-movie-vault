@@ -12,7 +12,7 @@ The idea of toys having life and prentending to be lifeless when kids are playin
 Buzz Lightyear
 
 ## Favorite Scene
-When Woody and other mutant toys came to life and frigtened Sid
+When Woody and other mutant toys came to life and frightened Sid
 
 ## Questions
 
