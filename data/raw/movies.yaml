@@ -1,3 +1,15 @@
+- id: resident-evil
+  title: Resident Evil
+  year: 2026
+  director: Zach Creggar
+  genre: [Horror, Science Fiction, Adventure]
+  rating: 8.5
+  viewings:
+    - date_watched: September 2026
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
+      rewatch: false
+
 - id: cars
   title: Cars
   year: 2006
