@@ -514,8 +514,8 @@
   rating: 9
   viewings:
     - date_watched: August 2025
-      location: Cineplex Cinemas Coquitlam and VIP
-      format: Screen X
+      location: Scotiabank Theatre Vancouver
+      format: IMAX
       rewatch: false
 
 - id: fantastic-4
