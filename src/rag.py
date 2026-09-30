@@ -359,7 +359,9 @@ def search(question: str, top_k: int, retrieval: str, hybrid_weight: float, path
     return ranked[:top_k]
 
 
-def answer_from_results(question: str, results: list[dict[str, Any]], chat_model: str) -> str:
+def answer_from_results(
+    question: str, results: list[dict[str, Any]], chat_model: str, conversation_history: str = ""
+) -> str:
     """Generate an answer from supplied retrieval results; reused by evaluators."""
     context = "\n\n".join(
         f"[{i}] {item['title']} — {item['section']} ({item['source']})\n{item['text']}"
@@ -375,7 +377,8 @@ def answer_from_results(question: str, results: list[dict[str, Any]], chat_model
         "in that entry's `Movies:` list, not one example. Respect exact labels: "
         "`IMAX` and `IMAX 70MM` are distinct formats unless the question explicitly "
         "asks to combine them. Cite each claim with [1], [2], etc.\n\n"
-        f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
+        f"Conversation so far:\n{conversation_history or '(no earlier messages)'}\n\n"
+        f"Retrieved context:\n{context}\n\nQuestion: {question}\nAnswer:"
     )
     return ollama("/api/generate", {"model": chat_model, "prompt": prompt, "stream": False})["response"].strip()
 

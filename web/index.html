@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ef">
+  <title>Movie Vault — Chat</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.55 system-ui, sans-serif; color: #24231f; background: #f5f3ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+    main { width: min(760px, 100%); height: min(860px, calc(100vh - 48px)); min-height: 480px; background: #fff; border: 1px solid #e7e3db; border-radius: 20px; box-shadow: 0 16px 50px #332b1710; display: flex; flex-direction: column; overflow: hidden; }
+    header { padding: 18px 26px; border-bottom: 1px solid #eeeae3; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    h1 { font-size: 1.15rem; margin: 0; letter-spacing: -.02em; }
+    header p { color: #77736b; margin: 3px 0 0; font-size: .9rem; }
+    #messages { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+    .welcome { margin: auto; max-width: 430px; text-align: center; color: #77736b; }
+    .welcome strong { display: block; color: #302e29; font-size: 1.25rem; margin-bottom: 7px; }
+    .message { max-width: 88%; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .user { align-self: flex-end; padding: 11px 15px; border-radius: 17px 17px 4px 17px; background: #ede9df; }
+    .assistant { align-self: flex-start; }
+    .assistant .text { white-space: pre-wrap; }
+    .sources { color: #77736b; font-size: .8rem; margin-top: 10px; }
+    .sources summary { cursor: pointer; }
+    .sources ul { margin: 6px 0; padding-left: 20px; }
+    .error { color: #a13f35; }
+    form { display: flex; align-items: end; gap: 10px; padding: 16px 20px; border-top: 1px solid #eeeae3; }
+    textarea { flex: 1; resize: none; min-height: 46px; max-height: 140px; border: 1px solid #dedad2; border-radius: 14px; padding: 11px 13px; font: inherit; outline: none; }
+    textarea:focus { border-color: #92846b; }
+    button { border: 0; border-radius: 12px; background: #302e29; color: white; padding: 12px 18px; font: inherit; cursor: pointer; }
+    button:disabled { opacity: .55; cursor: wait; }
+    #new-chat { padding: 8px 12px; color: #4f4b43; background: #f2f0eb; font-size: .88rem; }
+    @media (max-width: 520px) { body { padding: 0; } main { height: 100dvh; min-height: 0; border: 0; border-radius: 0; } #messages { padding: 18px; } header { padding: 18px; } form { padding: 12px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header><div><h1>Personal Movie Vault</h1><p>A private chat with your movie notes and viewing history</p></div><button id="new-chat" type="button">New chat</button></header>
+    <section id="messages" aria-live="polite" aria-label="Conversation">
+      <div class="welcome"><strong>What would you like to know?</strong>Ask about your ratings, movie notes, favorite scenes, or where you watched something.</div>
+    </section>
+    <form id="chat-form"><textarea id="message" aria-label="Your message" placeholder="Ask about your movie vault…" rows="1" required></textarea><button id="send" type="submit">Send</button></form>
+  </main>
+  <script>
+    const form = document.querySelector('#chat-form');
+    const input = document.querySelector('#message');
+    const messages = document.querySelector('#messages');
+    const send = document.querySelector('#send');
+    const history = [];
+    document.querySelector('#new-chat').addEventListener('click', () => {
+      history.length = 0;
+      messages.replaceChildren();
+      const welcome = document.createElement('div');
+      welcome.className = 'welcome';
+      welcome.innerHTML = '<strong>What would you like to know?</strong>Ask about your ratings, movie notes, favorite scenes, or where you watched something.';
+      messages.append(welcome);
+      input.focus();
+    });
+    function addMessage(role, content, sources) {
+      document.querySelector('.welcome')?.remove();
+      const node = document.createElement('article');
+      node.className = `message ${role}`;
+      const text = document.createElement('div');
+      text.className = 'text'; text.textContent = content; node.append(text);
+      if (sources?.length) {
+        const details = document.createElement('details'); details.className = 'sources';
+        const summary = document.createElement('summary'); summary.textContent = `Sources (${sources.length})`; details.append(summary);
+        const list = document.createElement('ul');
+        for (const source of sources) { const li = document.createElement('li'); li.textContent = `${source.title} — ${source.section} (${source.source})`; list.append(li); }
+        details.append(list); node.append(details);
+      }
+      messages.append(node); messages.scrollTop = messages.scrollHeight;
+      return node;
+    }
+    input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 140)}px`; });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); const question = input.value.trim(); if (!question || send.disabled) return;
+      addMessage('user', question); history.push({ role: 'user', content: question });
+      input.value = ''; input.style.height = 'auto'; send.disabled = true; send.textContent = '…';
+      const pending = addMessage('assistant', 'Thinking…');
+      try {
+        const response = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: question, history: history.slice(0, -1) }) });
+        const data = await response.json(); if (!response.ok) throw new Error(data.error || 'The request failed.');
+        pending.remove(); addMessage('assistant', data.answer, data.sources); history.push({ role: 'assistant', content: data.answer });
+      } catch (error) { pending.querySelector('.text').textContent = error.message; pending.querySelector('.text').classList.add('error'); }
+      finally { send.disabled = false; send.textContent = 'Send'; input.focus(); }
+    });
+    input.addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); form.requestSubmit(); } });
+  </script>
+</body>
+</html>

@@ -1,5 +1,25 @@
 [
   {
+    "id": "resident-evil",
+    "title": "Resident Evil",
+    "year": 2026,
+    "director": "Zach Creggar",
+    "genre": [
+      "Horror",
+      "Science Fiction",
+      "Adventure"
+    ],
+    "rating": 8.5,
+    "viewings": [
+      {
+        "date_watched": "September 2026",
+        "location": "Scotiabank Theatre Vancouver",
+        "format": "IMAX",
+        "rewatch": false
+      }
+    ]
+  },
+  {
     "id": "cars",
     "title": "Cars",
     "year": 2006,
@@ -833,8 +853,8 @@
     "viewings": [
       {
         "date_watched": "August 2025",
-        "location": "Cineplex Cinemas Coquitlam and VIP",
-        "format": "Screen X",
+        "location": "Scotiabank Theatre Vancouver",
+        "format": "IMAX",
         "rewatch": false
       }
     ]

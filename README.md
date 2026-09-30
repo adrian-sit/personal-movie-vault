@@ -114,6 +114,9 @@ data/processed/
 src/
   yaml_to_json.py         # Structured-data transformation
   rag.py                  # Index construction, retrieval, and generation
+  web.py                  # Local web chat server
+web/
+  index.html              # Chat interface
 ```
 
 ## RAG Design
@@ -271,6 +274,23 @@ Ask a question with retrieval and a local answer:
 python src\rag.py ask "Which movie did I find most immersive, and why?"
 python src\rag.py ask "What did I dislike about Sinners?" --top-k 3
 ```
+
+### Web chat
+
+Start Ollama and make sure the local index has been built as described in
+[Setup](#setup). Then run the local web server:
+
+```powershell
+python src\web.py
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) to chat with your movie
+vault. The interface keeps the conversation in the browser while the server
+uses your local RAG index and Ollama models to answer; retrieved sources are
+available below each answer. Standalone questions are retrieved independently,
+while short follow-ups can use the immediately preceding exchange for context.
+Choose **New chat** to clear the visible conversation and start over. Stop the
+server with `Ctrl+C`. The server listens only on your own computer.
 
 ### Structured-data questions
 
