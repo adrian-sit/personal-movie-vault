@@ -353,6 +353,11 @@ report after editing results with:
 python eval\summarize_results.py
 ```
 
+## Screenshots
+
+![alt text](/img/image1.png)
+![alt text](/img/image2.png)
+
 ## Privacy & Copyright
 
 This project is designed as a local-first system.
