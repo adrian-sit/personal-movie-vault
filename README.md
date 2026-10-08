@@ -290,7 +290,9 @@ uses your local RAG index and Ollama models to answer; retrieved sources are
 available below each answer. Standalone questions are retrieved independently,
 while short follow-ups can use the immediately preceding exchange for context.
 Choose **New chat** to clear the visible conversation and start over. Stop the
-server with `Ctrl+C`. The server listens only on your own computer.
+**Dark mode** or **Light mode** to change the appearance; your choice is saved
+in the browser. Stop the server with `Ctrl+C`. The server listens only on your
+own computer.
 
 ### Structured-data questions
 

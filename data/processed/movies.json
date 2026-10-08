@@ -1,5 +1,24 @@
 [
   {
+    "id": "primetime",
+    "title": "Primetime",
+    "year": 2026,
+    "director": "Lance Oppenheim",
+    "genre": [
+      "Thriller",
+      "Drama"
+    ],
+    "rating": 8.5,
+    "viewings": [
+      {
+        "date_watched": "October 2026",
+        "location": "Cineplex VIP Cinemas Brentwood",
+        "format": "VIP",
+        "rewatch": false
+      }
+    ]
+  },
+  {
     "id": "resident-evil",
     "title": "Resident Evil",
     "year": 2026,

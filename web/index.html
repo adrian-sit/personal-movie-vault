@@ -6,36 +6,38 @@
   <meta name="theme-color" content="#f5f3ef">
   <title>Movie Vault — Chat</title>
   <style>
-    :root { color-scheme: light; font: 16px/1.55 system-ui, sans-serif; color: #24231f; background: #f5f3ef; }
+    :root { color-scheme: light; font: 16px/1.55 system-ui, sans-serif; color: #24231f; background: #f5f3ef; --page: #f5f3ef; --panel: #fff; --border: #e7e3db; --line: #eeeae3; --muted: #77736b; --text: #24231f; --strong: #302e29; --bubble: #ede9df; --field: #fff; --field-border: #dedad2; --button-bg: #302e29; --button-text: #fff; --secondary-bg: #f2f0eb; --secondary-text: #4f4b43; --shadow: #332b1710; }
+    :root[data-theme="dark"] { color-scheme: dark; --page: #171817; --panel: #222422; --border: #383b37; --line: #343733; --muted: #aaa99f; --text: #eeeDE8; --strong: #f2f0e9; --bubble: #363933; --field: #292c29; --field-border: #484b46; --button-bg: #ded8c9; --button-text: #24231f; --secondary-bg: #363933; --secondary-text: #e3dfd4; --shadow: #00000040; }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; }
-    main { width: min(760px, 100%); height: min(860px, calc(100vh - 48px)); min-height: 480px; background: #fff; border: 1px solid #e7e3db; border-radius: 20px; box-shadow: 0 16px 50px #332b1710; display: flex; flex-direction: column; overflow: hidden; }
-    header { padding: 18px 26px; border-bottom: 1px solid #eeeae3; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--page); color: var(--text); }
+    main { width: min(760px, 100%); height: min(860px, calc(100vh - 48px)); min-height: 480px; background: var(--panel); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 16px 50px var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+    header { padding: 18px 26px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     h1 { font-size: 1.15rem; margin: 0; letter-spacing: -.02em; }
-    header p { color: #77736b; margin: 3px 0 0; font-size: .9rem; }
+    header p { color: var(--muted); margin: 3px 0 0; font-size: .9rem; }
     #messages { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
-    .welcome { margin: auto; max-width: 430px; text-align: center; color: #77736b; }
-    .welcome strong { display: block; color: #302e29; font-size: 1.25rem; margin-bottom: 7px; }
+    .welcome { margin: auto; max-width: 430px; text-align: center; color: var(--muted); }
+    .welcome strong { display: block; color: var(--strong); font-size: 1.25rem; margin-bottom: 7px; }
     .message { max-width: 88%; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .user { align-self: flex-end; padding: 11px 15px; border-radius: 17px 17px 4px 17px; background: #ede9df; }
+    .user { align-self: flex-end; padding: 11px 15px; border-radius: 17px 17px 4px 17px; background: var(--bubble); }
     .assistant { align-self: flex-start; }
     .assistant .text { white-space: pre-wrap; }
-    .sources { color: #77736b; font-size: .8rem; margin-top: 10px; }
+    .sources { color: var(--muted); font-size: .8rem; margin-top: 10px; }
     .sources summary { cursor: pointer; }
     .sources ul { margin: 6px 0; padding-left: 20px; }
     .error { color: #a13f35; }
-    form { display: flex; align-items: end; gap: 10px; padding: 16px 20px; border-top: 1px solid #eeeae3; }
-    textarea { flex: 1; resize: none; min-height: 46px; max-height: 140px; border: 1px solid #dedad2; border-radius: 14px; padding: 11px 13px; font: inherit; outline: none; }
+    form { display: flex; align-items: end; gap: 10px; padding: 16px 20px; border-top: 1px solid var(--line); }
+    textarea { flex: 1; resize: none; min-height: 46px; max-height: 140px; border: 1px solid var(--field-border); border-radius: 14px; padding: 11px 13px; font: inherit; outline: none; background: var(--field); color: var(--text); }
     textarea:focus { border-color: #92846b; }
-    button { border: 0; border-radius: 12px; background: #302e29; color: white; padding: 12px 18px; font: inherit; cursor: pointer; }
+    button { border: 0; border-radius: 12px; background: var(--button-bg); color: var(--button-text); padding: 12px 18px; font: inherit; cursor: pointer; }
     button:disabled { opacity: .55; cursor: wait; }
-    #new-chat { padding: 8px 12px; color: #4f4b43; background: #f2f0eb; font-size: .88rem; }
+    #new-chat, #theme-toggle { padding: 8px 12px; color: var(--secondary-text); background: var(--secondary-bg); font-size: .88rem; }
+    .header-actions { display: flex; gap: 8px; }
     @media (max-width: 520px) { body { padding: 0; } main { height: 100dvh; min-height: 0; border: 0; border-radius: 0; } #messages { padding: 18px; } header { padding: 18px; } form { padding: 12px; } }
   </style>
 </head>
 <body>
   <main>
-    <header><div><h1>Personal Movie Vault</h1><p>A private chat with your movie notes and viewing history</p></div><button id="new-chat" type="button">New chat</button></header>
+    <header><div><h1>Personal Movie Vault</h1><p>A private chat with your movie notes and viewing history</p></div><div class="header-actions"><button id="theme-toggle" type="button" aria-label="Switch to dark mode">Dark mode</button><button id="new-chat" type="button">New chat</button></div></header>
     <section id="messages" aria-live="polite" aria-label="Conversation">
       <div class="welcome"><strong>What would you like to know?</strong>Ask about your ratings, movie notes, favorite scenes, or where you watched something.</div>
     </section>
@@ -47,6 +49,21 @@
     const messages = document.querySelector('#messages');
     const send = document.querySelector('#send');
     const history = [];
+    const themeToggle = document.querySelector('#theme-toggle');
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      themeToggle.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+      themeToggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+      document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#171817' : '#f5f3ef';
+    }
+    let savedTheme = 'light';
+    try { savedTheme = localStorage.getItem('movie-vault-theme') || 'light'; } catch {}
+    applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+    themeToggle.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(theme);
+      try { localStorage.setItem('movie-vault-theme', theme); } catch {}
+    });
     document.querySelector('#new-chat').addEventListener('click', () => {
       history.length = 0;
       messages.replaceChildren();

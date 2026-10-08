@@ -1,8 +1,8 @@
 {
   "description": "Deterministic statistics derived from data/raw/movies.yaml.",
   "totals": {
-    "unique_movies": 62,
-    "viewing_count": 65,
+    "unique_movies": 63,
+    "viewing_count": 66,
     "rewatch_count": 3
   },
   "cinemas": [
@@ -192,8 +192,8 @@
     },
     {
       "location": "Cineplex VIP Cinemas Brentwood",
-      "unique_movies": 3,
-      "viewing_count": 3,
+      "unique_movies": 4,
+      "viewing_count": 4,
       "rewatch_count": 1,
       "movies": [
         {
@@ -207,6 +207,10 @@
         {
           "id": "nobody-2",
           "title": "Nobody 2"
+        },
+        {
+          "id": "primetime",
+          "title": "Primetime"
         }
       ]
     },
@@ -650,8 +654,8 @@
     },
     {
       "format": "VIP",
-      "unique_movies": 11,
-      "viewing_count": 12,
+      "unique_movies": 12,
+      "viewing_count": 13,
       "movies": [
         {
           "id": "28-years-later",
@@ -672,6 +676,10 @@
         {
           "id": "nobody-2",
           "title": "Nobody 2"
+        },
+        {
+          "id": "primetime",
+          "title": "Primetime"
         },
         {
           "id": "relay",
@@ -709,11 +717,11 @@
     "Premiere": 2,
     "Regular": 25,
     "Screen X": 4,
-    "VIP": 12
+    "VIP": 13
   },
   "viewings_by_year": {
     "2025": 48,
-    "2026": 17
+    "2026": 18
   },
   "viewing_records": [
     {
@@ -1206,6 +1214,20 @@
       "date_watched": "September 2025",
       "location": "The Park Theatre",
       "format": "70 MM",
+      "rewatch": false
+    },
+    {
+      "movie_id": "primetime",
+      "title": "Primetime",
+      "movie_year": 2026,
+      "rating": 8.5,
+      "genres": [
+        "Thriller",
+        "Drama"
+      ],
+      "date_watched": "October 2026",
+      "location": "Cineplex VIP Cinemas Brentwood",
+      "format": "VIP",
       "rewatch": false
     },
     {
