@@ -1,3 +1,15 @@
+- id: the-social-reckoning
+  title: The Social Reckoning
+  year: 2026
+  director: Aaron Sorkin
+  genre: [Drama, Thriller]
+  rating: 7.5
+  viewings:
+    - date_watched: October 2026
+      location: Cineplex Cinemas Metropolis
+      format: AVX
+      rewatch: false
+
 - id: primetime
   title: Primetime
   year: 2026
