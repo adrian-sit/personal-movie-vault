@@ -1,3 +1,15 @@
+- id: see-everything
+  title: You Can See Everything
+  year: 2026
+  director: Lance Oppenheim, Nathan Fielder
+  genre: [Documentary]
+  rating: 9.5
+  viewings:
+    - date_watched: October 2026
+      location: Landmark Cinemas New Westminster
+      format: Regular
+      rewatch: false
+
 - id: the-social-reckoning
   title: The Social Reckoning
   year: 2026
