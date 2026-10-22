@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import re
 import sys
 import urllib.error
@@ -26,7 +27,7 @@ MOVIES = PROCESSED / "movies.json"
 DOCUMENTS = PROCESSED / "documents.jsonl"
 INDEX = PROCESSED / "rag_index.json"
 STATISTICS = PROCESSED / "viewing_statistics.json"
-OLLAMA_URL = "http://localhost:11434"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
 SEMANTIC_CHUNK_MIN_WORDS = 80
 SEMANTIC_CHUNK_MAX_WORDS = 280
 SEMANTIC_BREAK_PERCENTILE = 0.80
@@ -49,7 +50,7 @@ def ollama(endpoint: str, payload: dict[str, Any]) -> dict[str, Any]:
             return json.loads(response.read())
     except urllib.error.URLError as exc:
         raise RuntimeError(
-            "Cannot reach Ollama at http://localhost:11434. Start Ollama and "
+            f"Cannot reach Ollama at {OLLAMA_URL}. Start Ollama and "
             "pull the models listed in the README."
         ) from exc
 

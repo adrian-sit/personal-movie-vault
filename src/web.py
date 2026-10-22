@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -82,7 +83,9 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def main() -> None:
-    server = ThreadingHTTPServer(("127.0.0.1", 8000), Handler)
+    host = os.environ.get("WEB_HOST", "127.0.0.1")
+    port = int(os.environ.get("WEB_PORT", "8000"))
+    server = ThreadingHTTPServer((host, port), Handler)
     print("Movie Vault chat: http://127.0.0.1:8000")
     try:
         server.serve_forever()

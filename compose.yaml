@@ -1,0 +1,44 @@
+services:
+  ollama:
+    image: ollama/ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    restart: unless-stopped
+
+  ollama-models:
+    image: ollama/ollama
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["/bin/sh", "-c"]
+    command: "ollama pull nomic-embed-text && ollama pull qwen2.5:3b"
+    volumes:
+      - ollama_data:/root/.ollama
+
+  app:
+    build: .
+    depends_on:
+      ollama-models:
+        condition: service_completed_successfully
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      WEB_HOST: 0.0.0.0
+      WEB_PORT: 8000
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data/raw:/app/data/raw:ro
+      - processed_data:/app/data/processed
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  processed_data:

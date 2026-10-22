@@ -238,6 +238,42 @@ python src\rag.py ask "Why did I find The Odyssey immersive?" --index data\proce
 
 ## Setup
 
+### Run with Docker
+
+Docker Compose runs the web app and Ollama together. It installs the Python
+dependency, downloads the embedding and chat models on first start, converts
+the current raw dataset, rebuilds the retrieval index, and then starts the
+web app. You do not need to install Python, Ollama, or the models on the host.
+You do need Docker Desktop (or Docker Engine with the Compose plugin).
+
+From the project folder, run:
+
+```sh
+docker compose up --build
+```
+
+The first start can take a while because Docker builds the app image and
+downloads the Ollama models. When the app starts, open
+[http://localhost:8000](http://localhost:8000). Keep the Compose process
+running while using the app. Press `Ctrl+C` to stop it; run the same command
+again to start it later.
+
+The raw source files in `data/raw/` are mounted read-only into the container,
+so edit them on your computer as usual. After adding or changing raw data,
+restart the app to regenerate `movies.json`, viewing statistics, retrieval
+chunks, and the embedding index before the web server starts:
+
+```sh
+docker compose restart app
+```
+
+Ollama's downloaded models and generated processed data are kept in Docker
+volumes across restarts. To stop and remove the containers while keeping that
+data, run `docker compose down`. To also delete the downloaded models and
+generated data, run `docker compose down --volumes`.
+
+### Run directly with Python
+
 This project uses [Ollama](https://ollama.com/) so both the embeddings and the
 language model stay on your computer. Install Ollama, then from PowerShell:
 
@@ -275,7 +311,7 @@ python src\rag.py ask "Which movie did I find most immersive, and why?"
 python src\rag.py ask "What did I dislike about Sinners?" --top-k 3
 ```
 
-### Web chat
+### Web chat without Docker
 
 Start Ollama and make sure the local index has been built as described in
 [Setup](#setup). Then run the local web server:
