@@ -1,3 +1,27 @@
+- id: clayface
+  title: Clayface
+  year: 2026
+  director: James Watkins
+  genre: [Horror, Thriller, Science Fiction]
+  rating: 9
+  viewings:
+    - date_watched: November 2026
+      location: Landmark Cinemas Surrey Guildford
+      format: Screen X
+      rewatch: false
+
+- id: wildwood
+  title: Wildwood
+  year: 2026
+  director: Travis Knight
+  genre: [Animation, Adventure, Fantasy]
+  rating: 8.5
+  viewings:
+    - date_watched: October 2026
+      location: Cineplex Odeon Meadowtown Cinemas
+      format: AVX
+      rewatch: false
+
 - id: see-everything
   title: You Can See Everything
   year: 2026
