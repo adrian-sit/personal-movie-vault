@@ -1,3 +1,15 @@
+- id: pickpocket
+  title: The Only Living Pickpocket in New York 
+  year: 2026
+  director: Noah Segan
+  genre: [Crime, Drama, Thriller]
+  rating: 7
+  viewings:
+    - date_watched: November 2026
+      location: Cineplex Cinemas Langley
+      format: Regular
+      rewatch: false
+
 - id: clayface
   title: Clayface
   year: 2026
